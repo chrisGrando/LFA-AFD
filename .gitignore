@@ -9,3 +9,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Project ###
+csv/output.csv

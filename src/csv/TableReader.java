@@ -9,39 +9,43 @@ import com.opencsv.exceptions.CsvValidationException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableReader {
-    private String tableString = "";
+    private String tableString[][];
     private CSVReader csvTable = null;
     
-    //Abre o arquivo
-    public void read(String path) throws IOException, CsvValidationException {
-        try {
-            //Classes, objetos e variáveis necessárias para a leitura do arquivo
-            FileReader filereader = new FileReader(path);
-            this.csvTable = new CSVReader(filereader);
-            String[] nextRecord;
-            
-            //Lê linha por linha o arquivo e converte para String
-            while ((nextRecord = this.csvTable.readNext()) != null) {
-                for (String cell : nextRecord) {
-                    this.tableString = this.tableString + cell + "\t";
-                }
-                this.tableString = this.tableString + "\n";
-            }
+    //Abre e lê o arquivo
+    public void read(String path) throws IOException, CsvValidationException, FileNotFoundException {
+        //Classes, objetos e variáveis necessárias para a leitura do arquivo
+        FileReader filereader = new FileReader(path);
+        this.csvTable = new CSVReader(filereader);
+        String[] nextRecord;
+        List<String[]> lineList = new ArrayList<>();
+        int size = 0;
+
+        //Lê linha por linha do arquivo
+        while ((nextRecord = this.csvTable.readNext()) != null) {
+            lineList.add(nextRecord);
+            size++;
         }
-        catch (FileNotFoundException error) {
-            System.out.println(error);
+        
+        //Adiciona todas as linhas em uma matriz de String
+        this.tableString = new String[size][];
+        for (int i = 0; i < size; i++) {
+            this.tableString[i] = lineList.get(i);
         }
     }
     
-    //String com o conteúdo do arquivo
-    public String getTableString(){
+    //String simples com o conteúdo do arquivo
+    public String getTableString() {
+        String table = this.csvTable.toString();
+        return table;
+    }
+    
+    //Tabela em formato de String
+    public String[][] getFullTable() {
         return this.tableString;
-    }
-    
-    //Arquivo CSV carregado
-    public CSVReader getCSV(){
-        return this.csvTable;
     }
 }

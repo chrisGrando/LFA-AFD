@@ -6,6 +6,7 @@ package app;
 
 import csv.TableManager;
 import com.opencsv.exceptions.CsvValidationException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AppLogic {
@@ -64,7 +65,7 @@ public class AppLogic {
     }
     
     //Executa a aplicação
-    private void exec() throws IOException, CsvValidationException {
+    private void exec() throws IOException, CsvValidationException, FileNotFoundException {
         /*
         TO DO:
         Inverter condição quando a interface gráfica for implementada!
@@ -72,7 +73,10 @@ public class AppLogic {
         if(Globals.GUI) {
             //Executa leitura da tabela
             this.tableManager.readInputFile(Globals.INPUT);
-            this.tableManager.printInputFile();
+            //Mostra tabela
+            this.tableManager.printTable();
+            //Grava nova tabela
+            this.tableManager.createOutputFile(Globals.OUTPUT);
         }
     }
 }
