@@ -18,12 +18,18 @@ public class AppLogic {
     }
     
     //Inicia a aplicação
-    public void start() throws IOException, CsvValidationException {
+    public void start()
+      throws IOException, CsvValidationException, FileNotFoundException {
         System.out.println("AppLogic => ON");
         
         //Parâmetros passados por linha de comando
         for(String currentArg : Globals.ARGS) {
-            //Parâmetro contém hífem
+            /*
+            Parâmetro contém hífem.
+            ======================================================
+            Usado para ativação de gatilhos.
+            Exemplo: -gui => interface gráfica
+            */
             if(currentArg.contains("-")) {
                 //Ativar interface gráfica
                 if(currentArg.regionMatches(1, "gui", 0, 3)) {
@@ -65,7 +71,8 @@ public class AppLogic {
     }
     
     //Executa a aplicação
-    private void exec() throws IOException, CsvValidationException, FileNotFoundException {
+    private void exec()
+      throws IOException, CsvValidationException, FileNotFoundException {
         /*
         TO DO:
         Inverter condição quando a interface gráfica for implementada!
@@ -73,10 +80,11 @@ public class AppLogic {
         if(Globals.GUI) {
             //Executa leitura da tabela
             this.tableManager.readInputFile(Globals.INPUT);
+            Globals.TABLE = this.tableManager.getTable();
             //Mostra tabela
             this.tableManager.printTable();
             //Grava nova tabela
-            this.tableManager.createOutputFile(Globals.OUTPUT);
+            this.tableManager.createOutputFile(Globals.OUTPUT, Globals.TABLE);
         }
     }
 }

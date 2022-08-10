@@ -1,41 +1,44 @@
 /**
 *** @author chrisGrando
-*** Classe destinada ao controle geral dos arquivos CSV.
+*** Classe destinada ao controle geral dos arquivos e tabelas CSV.
 **/
 package csv;
 
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class TableManager {
-    private TableReader tableReader;
-    private TableWriter tableWriter;
-    private String[][] table;
+    private String[][] inputTable;
     
     //Lê e carrega arquivo de entrada
-    public void readInputFile(String path) throws IOException, CsvValidationException, FileNotFoundException {
-        this.tableReader = new TableReader();
-        this.tableReader.read(path);
-        this.table = this.tableReader.getFullTable();
+    public void readInputFile(String path)
+      throws IOException, CsvValidationException, FileNotFoundException {
+        TableReader tableReader = new TableReader();
+        tableReader.read(path);
+        this.inputTable = tableReader.getFullTable();
     }
     
     //Cria e grava o arquivo de saída
-    public void createOutputFile(String path) {
-        this.tableWriter = new TableWriter();
-        this.tableWriter.write(path, this.table);
+    public void createOutputFile(String path, String[][] newTable) {
+        TableWriter tableWriter = new TableWriter();
+        tableWriter.write(path, newTable);
     }
     
-    //Exibe toda a tabela
+    //Exibe toda a tabela de entrada
     public void printTable() {
         System.out.println("\nTabela:");
-        for (String[] row : this.table) {
+        for (String[] row : this.inputTable) {
             System.out.print("| ");
             for (String cell : row) {
                 System.out.print(cell + " | ");
             }
             System.out.print("\n");
         }
+    }
+    
+    //Retorna a tabela de entrada
+    public String[][] getTable() {
+        return this.inputTable;
     }
 }

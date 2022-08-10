@@ -11,7 +11,8 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, CsvValidationException, FileNotFoundException {
+    public static void main(String[] args)
+      throws IOException, CsvValidationException, FileNotFoundException {
         //Armazena parâmetros passados por linha de comando
         Globals.ARGS = args;
         
