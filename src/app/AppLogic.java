@@ -4,6 +4,7 @@
 **/
 package app;
 
+import app.gui.SimpleGUI;
 import csv.TableManager;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.FileNotFoundException;
@@ -30,7 +31,7 @@ public class AppLogic {
             Usado para ativação de gatilhos.
             Exemplo: -gui => interface gráfica
             */
-            if(currentArg.contains("-")) {
+            if(currentArg.startsWith("-")) {
                 //Ativar interface gráfica
                 if(currentArg.regionMatches(1, "gui", 0, 3)) {
                     Globals.GUI = true;
@@ -73,11 +74,13 @@ public class AppLogic {
     //Executa a aplicação
     private void exec()
       throws IOException, CsvValidationException, FileNotFoundException {
-        /*
-        TO DO:
-        Inverter condição quando a interface gráfica for implementada!
-        */
+        //Exibe a interface gráfica (se ativada)
         if(Globals.GUI) {
+            Globals.HUD = new SimpleGUI();
+            Globals.HUD.startWindow();
+        }
+        //Se a interface gráfica estiver desativada
+        else {
             //Executa leitura da tabela
             this.tableManager.readInputFile(Globals.INPUT);
             Globals.TABLE = this.tableManager.getTable();
