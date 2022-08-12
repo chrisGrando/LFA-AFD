@@ -11,6 +11,7 @@ import java.io.File;
 //import java.io.FileReader;
 //import java.io.IOException;
 import javax.swing.JFileChooser;
+import java.awt.Toolkit;
 
 public class SimpleGUI extends javax.swing.JFrame {
     private String currentLog = "";
@@ -20,6 +21,8 @@ public class SimpleGUI extends javax.swing.JFrame {
     */
     public SimpleGUI() {
         initComponents();
+        setCenter();
+        setIcon();
     }
 
     /*
@@ -97,12 +100,20 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         Field_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Field_Input.setToolTipText("");
+        Field_Input.setMargin(new java.awt.Insets(3, 6, -1, 6));
+        Field_Input.setMaximumSize(new java.awt.Dimension(15, 19));
 
         Field_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Field_Output.setToolTipText("");
+        Field_Output.setMargin(new java.awt.Insets(3, 6, -1, 6));
+        Field_Output.setMaximumSize(new java.awt.Dimension(15, 19));
 
         Button_OpenFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_OpenFile.setText("...");
+        Button_OpenFile.setMargin(new java.awt.Insets(0, 14, 0, 14));
+        Button_OpenFile.setMaximumSize(new java.awt.Dimension(51, 17));
+        Button_OpenFile.setMinimumSize(new java.awt.Dimension(51, 17));
+        Button_OpenFile.setPreferredSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_OpenFileActionPerformed(evt);
@@ -111,6 +122,7 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         Button_SaveFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_SaveFile.setText("...");
+        Button_SaveFile.setMargin(new java.awt.Insets(0, 14, 0, 14));
         Button_SaveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_SaveFileActionPerformed(evt);
@@ -151,11 +163,11 @@ public class SimpleGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Field_Output, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-                            .addComponent(Field_Input))
+                            .addComponent(Field_Input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Button_SaveFile)
-                            .addComponent(Button_OpenFile)))
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Button_OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Button_SaveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -164,19 +176,24 @@ public class SimpleGUI extends javax.swing.JFrame {
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Field_Input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Label_Input)
-                    .addComponent(Button_OpenFile))
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Field_Input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Label_Input)))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(Button_OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Field_Output, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Label_Output)
-                    .addComponent(Button_SaveFile))
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Field_Output, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Label_Output))
+                    .addComponent(Button_SaveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Button_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addComponent(Label_Log)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,9 +257,10 @@ public class SimpleGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_SaveFileActionPerformed
 
     /*
-    Preenche automaticamente os campos de texto, dos arquivos de entrada
+    Executa automaticamente ao abrir a janela e faz o seguinte:
+    [*] Preenche os campos de texto, dos arquivos de entrada
     e saída, com os valores passados por linha de comando (se houverem).
-    Também configura o diretório atual da aplicação como diretório padrão
+    [*] Configura o diretório atual da aplicação como diretório padrão
     para abrir e salvar arquivos.
     */
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -262,6 +280,16 @@ public class SimpleGUI extends javax.swing.JFrame {
         this.currentLog = TextPane_Log.getText();
         TextPane_Log.setText(currentLog + log + "\n");
     }
+    
+    //Exibe o ícone do aplicativo
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Icon.png")));
+    }
+    
+    //Centraliza a janela
+    private void setCenter() {
+        setLocationRelativeTo(null);
+    }
 
     //Launch app window
     public void startWindow() {
@@ -277,15 +305,11 @@ public class SimpleGUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SimpleGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SimpleGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SimpleGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(SimpleGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */

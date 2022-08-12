@@ -19,5 +19,6 @@ public class Main {
         //Inicializando classe de lógica do aplicativo
         AppLogic app = new AppLogic();
         app.start();
+        app.exec();
     }
 }

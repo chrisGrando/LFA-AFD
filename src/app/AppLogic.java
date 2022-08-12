@@ -19,8 +19,7 @@ public class AppLogic {
     }
     
     //Inicia a aplicação
-    public void start()
-      throws IOException, CsvValidationException, FileNotFoundException {
+    public void start() {
         System.out.println("AppLogic => ON");
         
         //Parâmetros passados por linha de comando
@@ -66,13 +65,10 @@ public class AppLogic {
             System.out.println("Parâmetros inexistentes ou não satisfeitos...");
             System.out.println("GUI => ON");
         }
-        
-        //Fim da inicialização, início da execução
-        this.exec();
     }
     
     //Executa a aplicação
-    private void exec()
+    public void exec()
       throws IOException, CsvValidationException, FileNotFoundException {
         //Exibe a interface gráfica (se ativada)
         if(Globals.GUI) {
