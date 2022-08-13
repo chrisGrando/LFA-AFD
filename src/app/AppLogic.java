@@ -5,18 +5,8 @@
 package app;
 
 import app.gui.SimpleGUI;
-import csv.TableManager;
-import com.opencsv.exceptions.CsvValidationException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class AppLogic {
-    private final TableManager tableManager;
-    
-    //Construtor
-    public AppLogic() {
-        this.tableManager = new TableManager();
-    }
     
     //Inicia a aplicação
     public void start() {
@@ -68,22 +58,21 @@ public class AppLogic {
     }
     
     //Executa a aplicação
-    public void exec()
-      throws IOException, CsvValidationException, FileNotFoundException {
+    public void exec() {
         //Exibe a interface gráfica (se ativada)
         if(Globals.GUI) {
-            Globals.HUD = new SimpleGUI();
-            Globals.HUD.startWindow();
+            SimpleGUI hud = new SimpleGUI();
+            hud.startWindow();
         }
         //Se a interface gráfica estiver desativada
         else {
+            AFD afd = new AFD();
             //Executa leitura da tabela
-            this.tableManager.readInputFile(Globals.INPUT);
-            Globals.TABLE = this.tableManager.getTable();
+            afd.input(Globals.INPUT);
             //Mostra tabela
-            this.tableManager.printTable();
+            System.out.println(afd.showAFD(Globals.TABLE));
             //Grava nova tabela
-            this.tableManager.createOutputFile(Globals.OUTPUT, Globals.TABLE);
+            afd.output(Globals.OUTPUT, Globals.TABLE);
         }
     }
 }

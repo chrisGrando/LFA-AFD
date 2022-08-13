@@ -6,7 +6,6 @@ package csv;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class TableReader {
     
     //Abre e lê o arquivo
     public void read(String path)
-      throws IOException, CsvValidationException, FileNotFoundException {
+      throws IOException, CsvValidationException {
         //Classes, objetos e variáveis necessárias para a leitura do arquivo
         FileReader inputFile = new FileReader(path);
         CSVReader csvReader = new CSVReader(inputFile);

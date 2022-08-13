@@ -7,19 +7,20 @@
 package app.gui;
 
 import app.Globals;
+import app.AFD;
 import java.io.File;
-//import java.io.FileReader;
-//import java.io.IOException;
 import javax.swing.JFileChooser;
 import java.awt.Toolkit;
 
 public class SimpleGUI extends javax.swing.JFrame {
+    private final AFD afd;
     private String currentLog = "";
 
     /*
     Creates new form SimpleGUI
     */
     public SimpleGUI() {
+        afd = new AFD();
         initComponents();
         setCenter();
         setIcon();
@@ -74,8 +75,8 @@ public class SimpleGUI extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(640, 480));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -133,6 +134,11 @@ public class SimpleGUI extends javax.swing.JFrame {
         Button_Start.setText("Iniciar");
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Button_Start.setMargin(new java.awt.Insets(5, 0, 0, 0));
+        Button_Start.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_StartActionPerformed(evt);
+            }
+        });
 
         ScrollPane_Log.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ScrollPane_Log.setAlignmentX(0.0F);
@@ -222,7 +228,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         System.out.println(evt.toString());
         
         //Mensagem na área de log
-        this.printLog("Abrindo arquivo...");
+        this.printLog("Selecionando arquivo de entrada...");
         
         //Obtém o caminho de diretório completo do arquivo
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -235,14 +241,14 @@ public class SimpleGUI extends javax.swing.JFrame {
             this.printLog("Operação cancelada...");
         }
     }//GEN-LAST:event_Button_OpenFileActionPerformed
-    
+
     //Botão para salvar arquivo
     private void Button_SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_SaveFileActionPerformed
         int returnVal = FileChooser_Save.showOpenDialog(this);
         System.out.println(evt.toString());
         
         //Mensagem na área de log
-        this.printLog("Salvando arquivo...");
+        this.printLog("Configurando arquivo de saída...");
         
         //Obtém o caminho de diretório completo do arquivo
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -256,6 +262,17 @@ public class SimpleGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Button_SaveFileActionPerformed
 
+    //Botão para executar as operações com Autômatos Finitos Determinísticos
+    private void Button_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StartActionPerformed
+        System.out.println(evt.toString());
+        //Executa leitura da tabela
+        afd.input(Globals.INPUT);
+        //Mostra tabela
+        this.printLog(afd.showAFD(Globals.TABLE));
+        //Grava nova tabela
+        afd.output(Globals.OUTPUT, Globals.TABLE);
+    }//GEN-LAST:event_Button_StartActionPerformed
+
     /*
     Executa automaticamente ao abrir a janela e faz o seguinte:
     [*] Preenche os campos de texto, dos arquivos de entrada
@@ -263,9 +280,10 @@ public class SimpleGUI extends javax.swing.JFrame {
     [*] Configura o diretório atual da aplicação como diretório padrão
     para abrir e salvar arquivos.
     */
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         File myDir = new File(System.getProperty("user.dir"));
         System.out.println(evt.toString());
+        this.printLog("Iniciando...");
         
         //Campos de texto
         Field_Input.setText(Globals.INPUT);
@@ -273,19 +291,19 @@ public class SimpleGUI extends javax.swing.JFrame {
         //Diretório padrão
         FileChooser_Open.setCurrentDirectory(myDir);
         FileChooser_Save.setCurrentDirectory(myDir);
-    }//GEN-LAST:event_formWindowActivated
+    }//GEN-LAST:event_formWindowOpened
 
     //Exibe mensagens na área de log
     public void printLog(String log) {
         this.currentLog = TextPane_Log.getText();
         TextPane_Log.setText(currentLog + log + "\n");
     }
-    
+
     //Exibe o ícone do aplicativo
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Icon.png")));
     }
-    
+
     //Centraliza a janela
     private void setCenter() {
         setLocationRelativeTo(null);

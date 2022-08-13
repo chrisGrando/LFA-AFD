@@ -12,24 +12,20 @@ import java.io.IOException;
 public class TableWriter {
     
     //Grava o arquivo
-    public void write(String path, String[][] table) {
+    public void write(String path, String[][] table)
+      throws IOException {
+        //Classes, objetos e variáveis necessárias para a gravação do arquivo
         CSVWriter csvWriter;
-        try {
-            //Classes, objetos e variáveis necessárias para a gravação do arquivo
-            File file = new File(path);
-            FileWriter outputFile = new FileWriter(file);
-            csvWriter = new CSVWriter(outputFile);
-            
-            //Converte tabela em String, linha por linha, para arquivo CSV
-            for (String[] line : table) {
-                csvWriter.writeNext(line);
-            }
-            
-            //Fecha o arquivo
-            csvWriter.close();
+        File file = new File(path);
+        FileWriter outputFile = new FileWriter(file);
+        csvWriter = new CSVWriter(outputFile);
+
+        //Converte tabela em String, linha por linha, para arquivo CSV
+        for (String[] line : table) {
+            csvWriter.writeNext(line);
         }
-        catch (IOException error) {
-            System.out.println(error);
-        }
+
+        //Fecha o arquivo
+        csvWriter.close();
     }
 }
