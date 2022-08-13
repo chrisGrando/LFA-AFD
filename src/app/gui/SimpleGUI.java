@@ -68,21 +68,20 @@ public class SimpleGUI extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 640, 480));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        setMaximumSize(new java.awt.Dimension(640, 480));
-        setMinimumSize(new java.awt.Dimension(640, 480));
+        setMaximumSize(new java.awt.Dimension(622, 450));
+        setMinimumSize(new java.awt.Dimension(622, 450));
         setName("frameMainWindow"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(640, 480));
         setResizable(false);
-        setSize(new java.awt.Dimension(640, 480));
+        setSize(new java.awt.Dimension(622, 450));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
-        jPanel.setMaximumSize(new java.awt.Dimension(640, 480));
-        jPanel.setMinimumSize(new java.awt.Dimension(640, 480));
-        jPanel.setPreferredSize(new java.awt.Dimension(640, 480));
+        jPanel.setMaximumSize(new java.awt.Dimension(622, 450));
+        jPanel.setMinimumSize(new java.awt.Dimension(622, 450));
+        jPanel.setPreferredSize(new java.awt.Dimension(622, 450));
 
         Label_Input.setBackground(new java.awt.Color(255, 255, 255));
         Label_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
@@ -101,17 +100,14 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         Field_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Field_Input.setToolTipText("");
-        Field_Input.setMargin(new java.awt.Insets(3, 6, -1, 6));
         Field_Input.setMaximumSize(new java.awt.Dimension(15, 19));
 
         Field_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Field_Output.setToolTipText("");
-        Field_Output.setMargin(new java.awt.Insets(3, 6, -1, 6));
         Field_Output.setMaximumSize(new java.awt.Dimension(15, 19));
 
         Button_OpenFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_OpenFile.setText("...");
-        Button_OpenFile.setMargin(new java.awt.Insets(0, 14, 0, 14));
         Button_OpenFile.setMaximumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setMinimumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setPreferredSize(new java.awt.Dimension(51, 17));
@@ -123,7 +119,6 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         Button_SaveFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_SaveFile.setText("...");
-        Button_SaveFile.setMargin(new java.awt.Insets(0, 14, 0, 14));
         Button_SaveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_SaveFileActionPerformed(evt);
@@ -133,7 +128,6 @@ public class SimpleGUI extends javax.swing.JFrame {
         Button_Start.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_Start.setText("Iniciar");
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_Start.setMargin(new java.awt.Insets(5, 0, 0, 0));
         Button_Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StartActionPerformed(evt);
@@ -148,6 +142,9 @@ public class SimpleGUI extends javax.swing.JFrame {
         TextPane_Log.setEditable(false);
         TextPane_Log.setBorder(null);
         TextPane_Log.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        TextPane_Log.setMaximumSize(new java.awt.Dimension(622, 450));
+        TextPane_Log.setMinimumSize(new java.awt.Dimension(622, 450));
+        TextPane_Log.setPreferredSize(new java.awt.Dimension(622, 450));
         ScrollPane_Log.setViewportView(TextPane_Log);
 
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
@@ -156,11 +153,6 @@ public class SimpleGUI extends javax.swing.JFrame {
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLayout.createSequentialGroup()
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(252, 252, 252)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Button_Start, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(Label_Log, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,38 +164,40 @@ public class SimpleGUI extends javax.swing.JFrame {
                             .addComponent(Field_Input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Button_OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Button_SaveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(Button_SaveFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Button_OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(264, 264, 264)
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Label_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Button_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLayout.createSequentialGroup()
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Field_Input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_Input)))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(Button_OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(29, 29, 29)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Field_Output, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Label_Output))
-                    .addComponent(Button_SaveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Field_Input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Label_Input))
+                    .addComponent(Button_OpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(Button_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Field_Output, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Label_Output))
+                    .addComponent(Button_SaveFile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(Button_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(Label_Log)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         Field_Output.getAccessibleContext().setAccessibleName("");
@@ -212,11 +206,11 @@ public class SimpleGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 622, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -291,6 +285,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         //Diretório padrão
         FileChooser_Open.setCurrentDirectory(myDir);
         FileChooser_Save.setCurrentDirectory(myDir);
+        System.out.println("Diretório atual: " + myDir);
     }//GEN-LAST:event_formWindowOpened
 
     //Exibe mensagens na área de log
