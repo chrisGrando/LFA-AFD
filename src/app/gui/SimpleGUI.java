@@ -52,6 +52,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         FileChooser_Open.setApproveButtonText("Ok");
         FileChooser_Open.setCurrentDirectory(null);
         FileChooser_Open.setDialogTitle("Abrir arquivo CSV");
+        FileChooser_Open.setFileFilter(new MyFileFilter());
         FileChooser_Open.setMinimumSize(new java.awt.Dimension(600, 400));
         FileChooser_Open.setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -59,6 +60,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         FileChooser_Save.setApproveButtonText("Ok");
         FileChooser_Save.setCurrentDirectory(null);
         FileChooser_Save.setDialogTitle("Salvar arquivo CSV");
+        FileChooser_Save.setFileFilter(new MyFileFilter());
         FileChooser_Save.setMinimumSize(new java.awt.Dimension(600, 400));
         FileChooser_Save.setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -99,11 +101,11 @@ public class SimpleGUI extends javax.swing.JFrame {
         Label_Log.setText("Log");
 
         Field_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        Field_Input.setToolTipText("");
+        Field_Input.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de AFD para ABRIR.</p>\n   <p>[1] Caminho relativo: csv/input.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\input.csv</p>\n</html>");
         Field_Input.setMaximumSize(new java.awt.Dimension(15, 19));
 
         Field_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        Field_Output.setToolTipText("");
+        Field_Output.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de AFD para SALVAR.</p>\n   <p>[1] Caminho relativo: csv/output.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\output.csv</p>\n</html>");
         Field_Output.setMaximumSize(new java.awt.Dimension(15, 19));
 
         Button_OpenFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
@@ -128,6 +130,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         Button_Start.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_Start.setText("Iniciar");
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Button_Start.setMargin(new java.awt.Insets(3, 0, 0, 0));
         Button_Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StartActionPerformed(evt);
