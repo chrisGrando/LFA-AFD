@@ -5,6 +5,7 @@
 package app;
 
 import app.gui.SimpleGUI;
+import lfa.AFD;
 
 public class AppLogic {
     
@@ -69,8 +70,12 @@ public class AppLogic {
             AFD afd = new AFD();
             //Executa leitura da tabela
             afd.input(Globals.INPUT);
-            //Mostra tabela
-            System.out.println(afd.showAFD(Globals.TABLE));
+            //Mostra tabela lida
+            System.out.println("\nINPUT:" + afd.show(Globals.TABLE));
+            //Gera nova tabela
+            afd.generate(Globals.TABLE);
+            //Mostra nova tabela
+            System.out.println("\nOUTPUT:" + afd.show(Globals.TABLE));
             //Grava nova tabela
             afd.output(Globals.OUTPUT, Globals.TABLE);
         }

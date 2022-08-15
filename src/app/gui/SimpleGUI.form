@@ -4,7 +4,6 @@
   <NonVisualComponents>
     <Component class="javax.swing.JFileChooser" name="FileChooser_Open">
       <Properties>
-        <Property name="approveButtonText" type="java.lang.String" value="Ok"/>
         <Property name="currentDirectory" type="java.io.File" value="null"/>
         <Property name="dialogTitle" type="java.lang.String" value="Abrir arquivo CSV"/>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -21,7 +20,6 @@
     <Component class="javax.swing.JFileChooser" name="FileChooser_Save">
       <Properties>
         <Property name="dialogType" type="int" value="1"/>
-        <Property name="approveButtonText" type="java.lang.String" value="Ok"/>
         <Property name="currentDirectory" type="java.io.File" value="null"/>
         <Property name="dialogTitle" type="java.lang.String" value="Salvar arquivo CSV"/>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -244,6 +242,9 @@
               <Font name="Consolas" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="..."/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[51, 17]"/>
             </Property>
@@ -264,6 +265,9 @@
               <Font name="Consolas" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="..."/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_SaveFileActionPerformed"/>
@@ -275,9 +279,12 @@
               <Font name="Consolas" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Iniciar"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[3, 0, 0, 0]"/>
+              <Insets value="[2, 0, 0, 0]"/>
             </Property>
           </Properties>
           <Events>
@@ -306,6 +313,9 @@
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Texto"/>
                 </Property>
                 <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>

@@ -2,8 +2,9 @@
 *** @author chrisGrando
 *** Classe destinada para operações com Autômatos Finitos Determinísticos.
 **/
-package app;
+package lfa;
 
+import app.Globals;
 import csv.TableManager;
 
 public class AFD {
@@ -21,9 +22,9 @@ public class AFD {
         Globals.TABLE = this.tableManager.getTable();
     }
     
-    //Exibe toda a tabela do AFD
-    public String showAFD(String[][] srcTable) {
-        String table = "\nTabela:\n";
+    //Exibe todo o conteúdo da tabela
+    public String show(String[][] srcTable) {
+        String table = "\n";
         for (String[] row : srcTable) {
             table = table + "| ";
             for (String cell : row) {
@@ -38,5 +39,25 @@ public class AFD {
     public void output(String path, String[][] srcTable) {
         System.out.println("Action => Write OUTPUT");
         this.tableManager.createOutputFile(path, srcTable);
+    }
+    
+    /*
+    Gera nova tabela de Autômato Finito Determinı́stico, seguindo a ordem abaixo:
+    1) Geração de um Autômato Finito Não Determinı́stico (AFND);
+    2) Minimização;
+    3) Determinização.
+    */
+    public void generate(String[][] srcTable) {
+        //Variáveis
+        AFND afnd = new AFND();
+        Minimization minimization = new Minimization();
+        Determination determination = new Determination();
+        
+        //Autômato Finito Não Determinı́stico
+        System.out.println(afnd.toString());
+        //Minimização
+        System.out.println(minimization.toString());
+        //Determinização
+        System.out.println(determination.toString());
     }
 }

@@ -7,7 +7,7 @@
 package app.gui;
 
 import app.Globals;
-import app.AFD;
+import lfa.AFD;
 import java.io.File;
 import javax.swing.JFileChooser;
 import java.awt.Toolkit;
@@ -49,7 +49,6 @@ public class SimpleGUI extends javax.swing.JFrame {
         ScrollPane_Log = new javax.swing.JScrollPane();
         TextPane_Log = new javax.swing.JTextPane();
 
-        FileChooser_Open.setApproveButtonText("Ok");
         FileChooser_Open.setCurrentDirectory(null);
         FileChooser_Open.setDialogTitle("Abrir arquivo CSV");
         FileChooser_Open.setFileFilter(new MyFileFilter());
@@ -57,7 +56,6 @@ public class SimpleGUI extends javax.swing.JFrame {
         FileChooser_Open.setPreferredSize(new java.awt.Dimension(600, 400));
 
         FileChooser_Save.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        FileChooser_Save.setApproveButtonText("Ok");
         FileChooser_Save.setCurrentDirectory(null);
         FileChooser_Save.setDialogTitle("Salvar arquivo CSV");
         FileChooser_Save.setFileFilter(new MyFileFilter());
@@ -110,6 +108,7 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         Button_OpenFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_OpenFile.setText("...");
+        Button_OpenFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Button_OpenFile.setMaximumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setMinimumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setPreferredSize(new java.awt.Dimension(51, 17));
@@ -121,6 +120,7 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         Button_SaveFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_SaveFile.setText("...");
+        Button_SaveFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Button_SaveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_SaveFileActionPerformed(evt);
@@ -129,8 +129,9 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         Button_Start.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_Start.setText("Iniciar");
+        Button_Start.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_Start.setMargin(new java.awt.Insets(3, 0, 0, 0));
+        Button_Start.setMargin(new java.awt.Insets(2, 0, 0, 0));
         Button_Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StartActionPerformed(evt);
@@ -144,6 +145,7 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         TextPane_Log.setEditable(false);
         TextPane_Log.setBorder(null);
+        TextPane_Log.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         TextPane_Log.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         TextPane_Log.setMaximumSize(new java.awt.Dimension(622, 450));
         TextPane_Log.setMinimumSize(new java.awt.Dimension(622, 450));
@@ -241,7 +243,7 @@ public class SimpleGUI extends javax.swing.JFrame {
 
     //Botão para salvar arquivo
     private void Button_SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_SaveFileActionPerformed
-        int returnVal = FileChooser_Save.showOpenDialog(this);
+        int returnVal = FileChooser_Save.showSaveDialog(this);
         System.out.println(evt.toString());
         
         //Mensagem na área de log
@@ -264,8 +266,12 @@ public class SimpleGUI extends javax.swing.JFrame {
         System.out.println(evt.toString());
         //Executa leitura da tabela
         afd.input(Globals.INPUT);
-        //Mostra tabela
-        this.printLog(afd.showAFD(Globals.TABLE));
+        //Mostra tabela lida
+        this.printLog("\nINPUT:" + afd.show(Globals.TABLE));
+        //Gera nova tabela
+        afd.generate(Globals.TABLE);
+        //Mostra nova tabela
+        this.printLog("\nOUTPUT:" + afd.show(Globals.TABLE));
         //Grava nova tabela
         afd.output(Globals.OUTPUT, Globals.TABLE);
     }//GEN-LAST:event_Button_StartActionPerformed
@@ -288,7 +294,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         //Diretório padrão
         FileChooser_Open.setCurrentDirectory(myDir);
         FileChooser_Save.setCurrentDirectory(myDir);
-        System.out.println("Diretório atual: " + myDir);
+        System.out.println("Local: " + myDir);
     }//GEN-LAST:event_formWindowOpened
 
     //Exibe mensagens na área de log

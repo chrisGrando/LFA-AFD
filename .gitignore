@@ -11,4 +11,5 @@ nbdist/
 .nb-gradle/
 
 ### Project ###
-csv/output.csv
+csv/*.csv
+!csv/input.csv
