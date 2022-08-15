@@ -4,11 +4,11 @@
 **/
 package lfa;
 
-import app.Globals;
 import csv.TableManager;
 
 public class AFD {
     private final TableManager tableManager;
+    private String[][] newTable;
     
     //Construtor
     public AFD() {
@@ -19,7 +19,11 @@ public class AFD {
     public void input(String path) {
         System.out.println("Action => Read INPUT");
         this.tableManager.readInputFile(path);
-        Globals.TABLE = this.tableManager.getTable();
+    }
+    
+    //Retorna a tabela de entrada
+    public String[][] getInputTable() {
+        return this.tableManager.getReadedTable();
     }
     
     //Exibe todo o conteúdo da tabela
@@ -59,5 +63,13 @@ public class AFD {
         System.out.println(minimization.toString());
         //Determinização
         System.out.println(determination.toString());
+        
+        //Salva a nova tabela
+        this.newTable = srcTable;
+    }
+    
+    //Retorna a nova tabela gerada
+    public String[][] getGeneratedTable() {
+        return this.newTable;
     }
 }

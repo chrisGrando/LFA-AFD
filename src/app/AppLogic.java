@@ -68,16 +68,21 @@ public class AppLogic {
         //Se a interface gráfica estiver desativada
         else {
             AFD afd = new AFD();
+            String[][] originalTable;
+            String[][] generatedTable;
+            
             //Executa leitura da tabela
             afd.input(Globals.INPUT);
+            originalTable = afd.getInputTable();
             //Mostra tabela lida
-            System.out.println("\nINPUT:" + afd.show(Globals.TABLE));
+            System.out.println("\nINPUT:" + afd.show(originalTable));
             //Gera nova tabela
-            afd.generate(Globals.TABLE);
+            afd.generate(originalTable);
+            generatedTable = afd.getGeneratedTable();
             //Mostra nova tabela
-            System.out.println("\nOUTPUT:" + afd.show(Globals.TABLE));
+            System.out.println("\nOUTPUT:" + afd.show(generatedTable));
             //Grava nova tabela
-            afd.output(Globals.OUTPUT, Globals.TABLE);
+            afd.output(Globals.OUTPUT, originalTable);
         }
     }
 }

@@ -99,7 +99,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         Label_Log.setText("Log");
 
         Field_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        Field_Input.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de AFD para ABRIR.</p>\n   <p>[1] Caminho relativo: csv/input.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\input.csv</p>\n</html>");
+        Field_Input.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de tokens para ABRIR.</p>\n   <p>[1] Caminho relativo: csv/input.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\input.csv</p>\n</html>");
         Field_Input.setMaximumSize(new java.awt.Dimension(15, 19));
 
         Field_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
@@ -233,7 +233,6 @@ public class SimpleGUI extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = FileChooser_Open.getSelectedFile();
             Field_Input.setText(file.getAbsolutePath());
-            Globals.INPUT = Field_Input.getText();
         }
         else {
             //Mensagem na área de log
@@ -253,7 +252,6 @@ public class SimpleGUI extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = FileChooser_Save.getSelectedFile();
             Field_Output.setText(file.getAbsolutePath());
-            Globals.OUTPUT = Field_Output.getText();
         }
         else {
             //Mensagem na área de log
@@ -263,17 +261,22 @@ public class SimpleGUI extends javax.swing.JFrame {
 
     //Botão para executar as operações com Autômatos Finitos Determinísticos
     private void Button_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StartActionPerformed
+        String[][] originalTable;
+        String[][] generatedTable;
         System.out.println(evt.toString());
+        
         //Executa leitura da tabela
-        afd.input(Globals.INPUT);
+        afd.input(Field_Input.getText());
+        originalTable = afd.getInputTable();
         //Mostra tabela lida
-        this.printLog("\nINPUT:" + afd.show(Globals.TABLE));
+        this.printLog("\nINPUT:" + afd.show(originalTable));
         //Gera nova tabela
-        afd.generate(Globals.TABLE);
+        afd.generate(originalTable);
+        generatedTable = afd.getGeneratedTable();
         //Mostra nova tabela
-        this.printLog("\nOUTPUT:" + afd.show(Globals.TABLE));
+        this.printLog("\nOUTPUT:" + afd.show(generatedTable));
         //Grava nova tabela
-        afd.output(Globals.OUTPUT, Globals.TABLE);
+        afd.output(Field_Output.getText(), generatedTable);
     }//GEN-LAST:event_Button_StartActionPerformed
 
     /*
@@ -285,6 +288,7 @@ public class SimpleGUI extends javax.swing.JFrame {
     */
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         File myDir = new File(System.getProperty("user.dir"));
+        File defaultFile = new File(myDir.getAbsolutePath() + "/output.csv");
         System.out.println(evt.toString());
         this.printLog("Iniciando...");
         
@@ -294,6 +298,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         //Diretório padrão
         FileChooser_Open.setCurrentDirectory(myDir);
         FileChooser_Save.setCurrentDirectory(myDir);
+        FileChooser_Save.setSelectedFile(defaultFile);
         System.out.println("Local: " + myDir);
     }//GEN-LAST:event_formWindowOpened
 

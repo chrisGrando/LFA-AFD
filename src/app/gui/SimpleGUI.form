@@ -216,7 +216,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Consolas" size="12" style="0"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;   &lt;p&gt;O caminho de diret&#xf3;rio relativo&#xb9;/absoluto&#xb2; do arquivo da tabela de AFD para ABRIR.&lt;/p&gt;&#xa;   &lt;p&gt;[1] Caminho relativo: csv/input.csv&lt;/p&gt;&#xa;   &lt;p&gt;[2] Caminho absoluto: C:\u005cUsers\u005cfulano\u005cDocumentos\u005cCSV\u005cinput.csv&lt;/p&gt;&#xa;&lt;/html&gt;" containsInvalidXMLChars="true"/>
+            <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;   &lt;p&gt;O caminho de diret&#xf3;rio relativo&#xb9;/absoluto&#xb2; do arquivo da tabela de tokens para ABRIR.&lt;/p&gt;&#xa;   &lt;p&gt;[1] Caminho relativo: csv/input.csv&lt;/p&gt;&#xa;   &lt;p&gt;[2] Caminho absoluto: C:\u005cUsers\u005cfulano\u005cDocumentos\u005cCSV\u005cinput.csv&lt;/p&gt;&#xa;&lt;/html&gt;" containsInvalidXMLChars="true"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[15, 19]"/>
             </Property>

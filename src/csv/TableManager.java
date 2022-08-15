@@ -35,8 +35,8 @@ public class TableManager {
         }
     }
     
-    //Retorna a tabela de entrada
-    public String[][] getTable() {
+    //Retorna a tabela lida
+    public String[][] getReadedTable() {
         return this.inputTable;
     }
 }
