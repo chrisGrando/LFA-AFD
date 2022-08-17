@@ -10,11 +10,11 @@ import lfa.AFD;
 public class AppLogic {
     
     //Inicia a aplicação
-    public void start() {
+    public void start(String[] args) {
         System.out.println("AppLogic => ON");
         
         //Parâmetros passados por linha de comando
-        for(String currentArg : Globals.ARGS) {
+        for(String currentArg : args) {
             /*
             Parâmetro contém hífem.
             ======================================================
@@ -51,7 +51,7 @@ public class AppLogic {
         Ativar interface gráfica se não existirem parâmetos, ou então,
         caso o caminho de diretório de entrada/saída seja nulo.
         */
-        if(Globals.ARGS == null || Globals.INPUT == null || Globals.OUTPUT == null) {
+        if(args == null || Globals.INPUT == null || Globals.OUTPUT == null) {
             Globals.GUI = true;
             System.out.println("Parâmetros inexistentes ou não satisfeitos...");
             System.out.println("GUI => ON");
@@ -82,7 +82,7 @@ public class AppLogic {
             //Mostra nova tabela
             System.out.println("\nOUTPUT:" + afd.show(generatedTable));
             //Grava nova tabela
-            afd.output(Globals.OUTPUT, originalTable);
+            afd.output(Globals.OUTPUT, generatedTable);
         }
     }
 }

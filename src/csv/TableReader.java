@@ -26,6 +26,11 @@ public class TableReader {
 
         //Lê linha por linha do arquivo
         while ((nextRecord = csvReader.readNext()) != null) {
+            //Ignora a linha caso não possua um sı́mbolo com o formato "::="
+            if(!nextRecord[0].contains("::="))
+                continue;
+            
+            //Adiciona linha no array
             lineList.add(nextRecord);
             size++;
         }

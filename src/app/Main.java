@@ -8,12 +8,11 @@ package app;
 public class Main {
 
     public static void main(String[] args) {
-        //Armazena parâmetros passados por linha de comando
-        Globals.ARGS = args;
-        
-        //Inicializando classe de lógica do aplicativo
+        //Inicializa classe de lógica do aplicativo
         AppLogic app = new AppLogic();
-        app.start();
+        app.start(args);
+        
+        //Executa o programa
         app.exec();
     }
 }
