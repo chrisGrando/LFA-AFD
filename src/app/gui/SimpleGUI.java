@@ -265,18 +265,26 @@ public class SimpleGUI extends javax.swing.JFrame {
         String[][] generatedTable;
         System.out.println(evt.toString());
         
-        //Executa leitura da tabela
-        afd.input(Field_Input.getText());
-        originalTable = afd.getInputTable();
-        //Mostra tabela lida
-        this.printLog("\nINPUT:" + afd.show(originalTable));
-        //Gera nova tabela
-        afd.generate(originalTable);
-        generatedTable = afd.getGeneratedTable();
-        //Mostra nova tabela
-        this.printLog("\nOUTPUT:" + afd.show(generatedTable));
-        //Grava nova tabela
-        afd.output(Field_Output.getText(), generatedTable);
+        //Checa se os campos de entrada e saída estão vazios
+        if(Field_Input.getText().isBlank() || Field_Output.getText().isBlank()) {
+            this.printLog("Erro!!\nCampo de entrada e/ou saída não pode ficar em branco.");
+        }
+        //Campos de entrada e saída foram preenchidos
+        else {
+            this.printLog("Processando tabelas...");
+            //Executa leitura da tabela
+            afd.input(Field_Input.getText());
+            originalTable = afd.getOriginalTable();
+            //Mostra tabela lida
+            this.printLog("\nINPUT:" + afd.show(originalTable));
+            //Gera nova tabela
+            afd.generate(originalTable);
+            generatedTable = afd.getGeneratedTable();
+            //Mostra nova tabela
+            this.printLog("\nOUTPUT:" + afd.show(generatedTable));
+            //Grava nova tabela
+            afd.output(Field_Output.getText(), generatedTable);
+        }
     }//GEN-LAST:event_Button_StartActionPerformed
 
     /*

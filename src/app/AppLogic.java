@@ -65,7 +65,7 @@ public class AppLogic {
             SimpleGUI hud = new SimpleGUI();
             hud.startWindow();
         }
-        //Se a interface gráfica estiver desativada
+        //Executa somente se a interface gráfica estiver desativada
         else {
             AFD afd = new AFD();
             String[][] originalTable;
@@ -73,7 +73,7 @@ public class AppLogic {
             
             //Executa leitura da tabela
             afd.input(Globals.INPUT);
-            originalTable = afd.getInputTable();
+            originalTable = afd.getOriginalTable();
             //Mostra tabela lida
             System.out.println("\nINPUT:" + afd.show(originalTable));
             //Gera nova tabela

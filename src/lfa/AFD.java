@@ -22,7 +22,7 @@ public class AFD {
     }
     
     //Retorna a tabela de entrada
-    public String[][] getInputTable() {
+    public String[][] getOriginalTable() {
         return this.tableManager.getReadedTable();
     }
     
