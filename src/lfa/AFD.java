@@ -58,14 +58,14 @@ public class AFD {
         Determination determination = new Determination();
         
         //Autômato Finito Não Determinı́stico
-        System.out.println(afnd.toString());
+        afnd.create(srcTable);
         //Minimização
         System.out.println(minimization.toString());
         //Determinização
         System.out.println(determination.toString());
         
         //Salva a nova tabela
-        this.newTable = srcTable;
+        this.newTable = afnd.getAFND();
     }
     
     //Retorna a nova tabela gerada
