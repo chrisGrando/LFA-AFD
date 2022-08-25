@@ -1,3 +1,9 @@
+*, Tokens
+#,se
+#,entao
+#,senao
+
+*, Gramáticas
 "<S> ::= ","a<A>","e<A>","i<A>","o<A>","u<A>","b<B>","b<A>"
 "<A> ::= ","a<A>","e<A>","i<A>","o<A>","u<A>","ε"
 "<B> ::= ","a<A>","ε"

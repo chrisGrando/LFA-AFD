@@ -20,7 +20,8 @@ public class TableManager {
             this.inputTable = tableReader.getFullTable();
         }
         catch (IOException | CsvValidationException error) {
-            Logger.getLogger(TableManager.class.getName()).log(Level.SEVERE, null, error);
+            String msg = "Unable to read the file...";
+            Logger.getLogger(TableManager.class.getName()).log(Level.SEVERE, msg, error);
         }
     }
     
@@ -31,7 +32,8 @@ public class TableManager {
             tableWriter.write(path, newTable);
         }
         catch (IOException error) {
-            Logger.getLogger(TableManager.class.getName()).log(Level.SEVERE, null, error);
+            String msg = "Unable to write the file...";
+            Logger.getLogger(TableManager.class.getName()).log(Level.SEVERE, msg, error);
         }
     }
     

@@ -15,12 +15,12 @@ public class AFND {
     //Contrutor
     public AFND() {
         lowerAlphabet = new char[] {
-          'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-          'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+          'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+          'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
         };
         upperAlphabet = new char[] {
-          'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
-          'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+          'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+          'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
     }
     
@@ -30,27 +30,108 @@ public class AFND {
         List<String> currentLine = new ArrayList<>();
         currentLine.add("ƍ"); //Primeira cédula da tabela
         
-        //Cria a primeira linha da tabela com os rótulos
+        /*
+        RÓTULOS #1
+        =================================================================
+        Monta a primeira linha da tabela, composta por letras minúsculas.
+        */
+        
+        //Vasculha cada linha
         for(String[] row : srcTable) {  
-            //Vasculha cada cédula e procura por letras minúsculas
+            //Vasculha cada coluna
             for(String column : row) {
-                //Pula a cédula se conter o símbolo "::="
-                if(column.contains("::="))
+                //Pula a cédula se conter o símbolo "#" ou "::="
+                if(column.equals("#") || column.contains("::="))
                     continue;
-                //Adiciona a letra minúscula como rótulo (se houver) sem repetir
-                String letter = this.findLowerLetter(column);
-                if(letter != null && !currentLine.contains(letter)) {
-                    currentLine.add(letter);
+                
+                //Caso a cédula seja um "ε" (símbolo terminal)
+                if(column.contains("ε") && !currentLine.contains("£")) {
+                    currentLine.add("£");
+                    continue;
+                }
+                
+                //Procura por letras minúsculas
+                String letters = this.findAlphabetLetter(column, this.lowerAlphabet);
+                //Pula a cédula se não houverem letras minúsculas
+                if(letters == null)
+                    continue;
+                
+                //Adiciona a(s) letra(s) minúscula(s) como rótulo, sem repetir
+                for(char l: letters.toCharArray()) {
+                    if(!currentLine.contains(String.valueOf(l))) {
+                        currentLine.add(String.valueOf(l));
+                        break;
+                    }
                 }
             }
         }
         rowList.add(this.arrayToVector(currentLine));
+        
+        /*
+        RÓTULOS #2
+        ==================================================================
+        Monta a primeira coluna da tabela, composta por letras maiúsculas.
+        Preenche todas as outras cédulas, que não são rótulos, com "-".
+        */
+        
+        //Vasculha cada linha
+        for(String[] row : srcTable) {
+            String tmpCell = "";
+            
+            //Pula a linha se conter o símbolo "#"
+            if(row[0].equals("#"))
+                continue;
+            
+            //Vasculha cada coluna
+            for(String column : row) {
+                //Procura por letras maiúsculas
+                String letters = this.findAlphabetLetter(column, this.upperAlphabet);
+                //Pula a cédula se não houverem letras maiúsculas
+                if(letters == null)
+                    continue;
+                
+                //Adiciona a(s) letra(s) maiúscula(s) como rótulo, sem repetir
+                for(char l: letters.toCharArray()) {
+                    if(!tmpCell.contains(String.valueOf(l)))
+                        tmpCell += String.valueOf(l);
+                }
+            }
+            
+            //Adiciona todas linhas com a primeira coluna da tabela
+            for(char t : tmpCell.toCharArray()) {
+                //Limpa a lista da linha atual
+                currentLine.clear();
+                
+                //Adiciona a letra na linha
+                if(!this.isAlreadyIncluded(t, rowList)) {
+                    currentLine.add(String.valueOf(t));
+                
+                    //Preenche todas as outras cédulas com "-"
+                    for(int i = 1; i < rowList.get(0).length; i++)
+                        currentLine.add("-");
+
+                    //Adiciona linha atual
+                    rowList.add(this.arrayToVector(currentLine));
+                }
+            }
+        }
         
         //Adiciona todas as linhas na tabela
         this.myAFND = new String[rowList.size()][];
         for(int i = 0; i < rowList.size(); i++) {
             this.myAFND[i] = rowList.get(i);
         }
+    }
+    
+    //Checa se uma gramática já foi inclusa
+    private boolean isAlreadyIncluded(char c, List<String[]> list) {
+        for(String[] l: list) {
+            if(Character.compare(c, l[0].charAt(0)) == 0)
+                //Já foi inclusa
+                return true;
+        }
+        //Não foi inclusa
+        return false;
     }
     
     //Converte array para vetor
@@ -64,25 +145,21 @@ public class AFND {
         return vector;
     }
     
-    //Procura por letra minúscula do alfabeto
-    private String findLowerLetter(String txt) {
-        for(char l : txt.toCharArray()) {
-            for(char a : this.lowerAlphabet) {
-                if(Character.compare(l, a) == 0)
-                    return Character.toString(l);
+    //Procura por letra do alfabeto
+    private String findAlphabetLetter(String txt, char[] alphabet) {
+        String result = "";
+        for(char t : txt.toCharArray()) {
+            for(char a : alphabet) {
+                if(Character.compare(t, a) == 0)
+                    result += Character.toString(t);
             }
-        }  
-        return null;
-    }
-    
-    //Procura por letra maiúscula do alfabeto
-    private String findUpperLetter(String txt) {
-        for(char l : txt.toCharArray()) {
-            for(char a : this.upperAlphabet) {
-                if(Character.compare(l, a) == 0)
-                    return Character.toString(l);
-            }
-        }  
+        }
+        
+        //Caso seja encontrada, no mínimo, 1 letra
+        if(!result.isBlank())
+            return result;
+        
+        //Caso nenhuma letra seja encontrada
         return null;
     }
     
