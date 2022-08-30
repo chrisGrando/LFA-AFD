@@ -5,12 +5,14 @@
 package lfa;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AFND {
     private String[][] myAFND;
     private final char[] lowerAlphabet;
     private final char[] upperAlphabet;
+    private long auxLabel = 1;
     
     //Contrutor
     public AFND() {
@@ -26,15 +28,18 @@ public class AFND {
     
     //Cria tabela de AFND
     public void create(String[][] srcTable) {
-        List<String[]> rowList = new ArrayList<>();
-        List<String> currentLine = new ArrayList<>();
-        currentLine.add("ƍ"); //Primeira cédula da tabela
+        List<String[]> rowList = new ArrayList<>(); //Lista de Linhas
+        List<String> currentLine = new ArrayList<>(); //Lista de Colunas
+        List<String> labels = new ArrayList<>(); //Lista rótulos
+        List<String> tokenList = new ArrayList<>(); //Lista de tokens
+        List<String> grammarList = new ArrayList<>(); //Lista de gramáticas
         
         /*
-        RÓTULOS #1
+        RÓTULOS
         =================================================================
         Monta a primeira linha da tabela, composta por letras minúsculas.
         */
+        currentLine.add("δ"); //Primeira cédula da tabela
         
         //Vasculha cada linha
         for(String[] row : srcTable) {  
@@ -45,8 +50,10 @@ public class AFND {
                     continue;
                 
                 //Caso a cédula seja um "ε" (símbolo terminal)
-                if(column.contains("ε") && !currentLine.contains("£")) {
-                    currentLine.add("£");
+                if(column.contains("ε")) {
+                    if(!currentLine.contains("t"))
+                        currentLine.add("t");
+                    //Pula para a próxima cédula
                     continue;
                 }
                 
@@ -60,76 +67,213 @@ public class AFND {
                 for(char l: letters.toCharArray()) {
                     if(!currentLine.contains(String.valueOf(l))) {
                         currentLine.add(String.valueOf(l));
-                        break;
                     }
                 }
             }
         }
+        
+        //Armazena a linha com os rótulos
+        labels.addAll(currentLine);
         rowList.add(this.arrayToVector(currentLine));
         
         /*
-        RÓTULOS #2
+        ESTADOS => Tokens
         ==================================================================
-        Monta a primeira coluna da tabela, composta por letras maiúsculas.
-        Preenche todas as outras cédulas, que não são rótulos, com "-".
+        Processa os estados dos tokens.
         */
         
-        //Vasculha cada linha
+        //Cria a gramática inicial (S)
+        rowList.add(this.addNewGrammar(rowList, "S"));
+        
+        //Procura por tokens
         for(String[] row : srcTable) {
-            String tmpCell = "";
-            
-            //Pula a linha se conter o símbolo "#"
             if(row[0].equals("#"))
-                continue;
+                tokenList.add(row[1]);
+        }
+        
+        //Processa os estados dos tokens
+        for(String t : tokenList) {
             
-            //Vasculha cada coluna
-            for(String column : row) {
-                //Procura por letras maiúsculas
-                String letters = this.findAlphabetLetter(column, this.upperAlphabet);
-                //Pula a cédula se não houverem letras maiúsculas
-                if(letters == null)
-                    continue;
+            //Cria nova gramática
+            rowList.add(this.addNewGrammar(rowList));
+            //Limpa a lista da linha atual
+            currentLine.clear();
+            //Número da linha atual
+            int currentIndex = 1; //1 = Linha S
+            //Número da última linha criada
+            int lastIndex = rowList.size() - 1;
+            //Obtém linha da gramática inicial
+            currentLine.addAll(Arrays.asList(rowList.get(currentIndex)));
+            //ID da última gramática adicionada
+            String lastState = rowList.get(lastIndex)[0];
+            
+            //Percorre todas as letras do token
+            for(int i = 0; i < t.length(); i++) {
+                //Caractere atual
+                String s = Character.toString(t.charAt(i));
                 
-                //Adiciona a(s) letra(s) maiúscula(s) como rótulo, sem repetir
-                for(char l: letters.toCharArray()) {
-                    if(!tmpCell.contains(String.valueOf(l)))
-                        tmpCell += String.valueOf(l);
-                }
-            }
-            
-            //Adiciona todas linhas com a primeira coluna da tabela
-            for(char t : tmpCell.toCharArray()) {
+                //Novo valor da cédula
+                String newValue;
+                //Se estiver vazia => Substitui
+                if(currentLine.get(labels.indexOf(s)).equals("–"))
+                    newValue = lastState;
+                //Se já está ocupada => Adiciona
+                else
+                    newValue = currentLine.get(labels.indexOf(s)) + ";" + lastState;
+                
+                //Armazena novo valor na linha
+                currentLine.set(labels.indexOf(s), newValue);
+                rowList.set(currentIndex, this.arrayToVector(currentLine));
+                
                 //Limpa a lista da linha atual
                 currentLine.clear();
-                
-                //Adiciona a letra na linha
-                if(!this.isAlreadyIncluded(t, rowList)) {
-                    currentLine.add(String.valueOf(t));
-                
-                    //Preenche todas as outras cédulas com "-"
-                    for(int i = 1; i < rowList.get(0).length; i++)
-                        currentLine.add("-");
-
-                    //Adiciona linha atual
-                    rowList.add(this.arrayToVector(currentLine));
+                //Cria nova gramática, se não estiver no último elemento do token
+                if(i != (t.length() - 1)) {
+                    currentLine.addAll(Arrays.asList(rowList.get(lastIndex)));
+                    currentIndex = lastIndex;
+                    rowList.add(this.addNewGrammar(rowList));
+                    lastIndex = rowList.size() - 1;
+                    lastState = rowList.get(lastIndex)[0];
+                }
+                //Marca última gramática criada como final, se estiver no último elemento do token
+                else {
+                    currentLine.addAll(Arrays.asList(rowList.get(lastIndex)));
+                    currentLine.set(0, "*" + currentLine.get(0));
+                    rowList.set(lastIndex, this.arrayToVector(currentLine));
                 }
             }
         }
         
-        //Adiciona todas as linhas na tabela
+        /*
+        ESTADOS => Gramáticas
+        ==================================================================
+        Processa os estados das gramáticas.
+        */
+        
+        //Procura por gramáticas e checa a sintaxe
+        for(String[] row : srcTable) {
+            
+            if(row[0].contains("::=")) {
+                if(isGrammarCorrect(row[0]))
+                    grammarList.addAll(Arrays.asList(row));
+            }
+        }
+        
+        /*
+        FIM
+        ==================================================================
+        Adiciona todas as linhas na tabela.
+        */
         this.myAFND = new String[rowList.size()][];
         for(int i = 0; i < rowList.size(); i++) {
             this.myAFND[i] = rowList.get(i);
         }
     }
     
+    //Checa se a sintaxe da gramática está correta
+    private boolean isGrammarCorrect(String txt) {
+        int check = 0;
+        boolean result = false;
+        
+        for(char c : txt.toCharArray()) {
+            
+            switch (check) {
+                //Começa por "<"?
+                case 0 -> {
+                    if(Character.compare(c, '<') == 0)
+                        check++;
+                }
+                //Possui letra maiúscula?
+                case 1 -> {
+                    String l = this.findAlphabetLetter(Character.toString(c), this.upperAlphabet);
+                    if(l != null)
+                        check++;
+                    else
+                        check = 0;
+                }
+                //Termina com ">"?
+                case 2 -> {
+                    if(Character.compare(c, '>') == 0)
+                        check++;
+                    else
+                        check = 0;
+                }
+            }
+        }
+        
+        //Gramática está correta
+        if(check > 2) {
+            result = true;
+        }
+        
+        return result;
+    }
+    
+    //Adiciona nova gramática (sem letra ou alfabeto específico)
+    private String[] addNewGrammar(List<String[]> list) {
+        return this.addNewGrammar(list, null);
+    }
+    
+    //Adiciona nova gramática
+    private String[] addNewGrammar(List<String[]> list, String custom) {
+        char[] auxAlphabet;
+        String[] grammar = null;
+        int size = list.get(0).length;
+        
+        //Se for pedido uma ou várias letras específicas
+        if(custom != null) {
+            auxAlphabet = custom.toCharArray();
+        }
+        //Usar alfabeto padrão se não houverem especificações
+        else {
+            auxAlphabet = this.upperAlphabet;
+        }
+        
+        //Procura por uma letra não usada para adicionar à lista
+        for(char c : auxAlphabet) {
+            if(!this.isAlreadyIncluded(c, list)) {
+                grammar = new String[size];
+                //Letra da nova gramática
+                grammar[0] = Character.toString(c);
+                //Interrompe loop
+                break;
+            }
+        }
+        
+        //Caso nenhuma letra disponível seja encontrada...
+        if(grammar == null) {
+            grammar = new String[size];
+            //...Será usado um número no lugar
+            grammar[0] = Long.toString(this.auxLabel);
+            this.auxLabel++;
+        }
+        
+        //Preenche todas as outras cédulas com "–"
+        for(int i = 1; i < size; i++) 
+            grammar[i] = "–";
+        
+        //Retorna nova gramática
+        return grammar;
+    }
+    
     //Checa se uma gramática já foi inclusa
     private boolean isAlreadyIncluded(char c, List<String[]> list) {
+        
         for(String[] l: list) {
-            if(Character.compare(c, l[0].charAt(0)) == 0)
-                //Já foi inclusa
-                return true;
+            //Estado normal
+            if(l[0].length() == 1) {
+                if(Character.compare(c, l[0].charAt(0)) == 0)
+                    //Já foi inclusa
+                    return true;
+            }
+            //Estado final
+            if(l[0].length() > 1) {
+                if(Character.compare(c, l[0].charAt(1)) == 0)
+                    //Já foi inclusa
+                    return true;
+            }
         }
+        
         //Não foi inclusa
         return false;
     }
@@ -148,6 +292,7 @@ public class AFND {
     //Procura por letra do alfabeto
     private String findAlphabetLetter(String txt, char[] alphabet) {
         String result = "";
+        
         for(char t : txt.toCharArray()) {
             for(char a : alphabet) {
                 if(Character.compare(t, a) == 0)
