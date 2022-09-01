@@ -51,8 +51,8 @@ public class AFND {
                 
                 //Caso a cédula seja um "ε" (símbolo terminal)
                 if(column.contains("ε")) {
-                    if(!currentLine.contains("t"))
-                        currentLine.add("t");
+                    if(!currentLine.contains("$"))
+                        currentLine.add("$");
                     //Pula para a próxima cédula
                     continue;
                 }
@@ -84,6 +84,7 @@ public class AFND {
         
         //Cria a gramática inicial (S)
         rowList.add(this.addNewGrammar(rowList, "S"));
+        String lastState;
         
         //Procura por tokens
         for(String[] row : srcTable) {
@@ -104,8 +105,8 @@ public class AFND {
             int lastIndex = rowList.size() - 1;
             //Obtém linha da gramática inicial
             currentLine.addAll(Arrays.asList(rowList.get(currentIndex)));
-            //ID da última gramática adicionada
-            String lastState = rowList.get(lastIndex)[0];
+            //ID da última gramática
+            lastState = rowList.get(lastIndex)[0];
             
             //Percorre todas as letras do token
             for(int i = 0; i < t.length(); i++) {
@@ -127,17 +128,19 @@ public class AFND {
                 
                 //Limpa a lista da linha atual
                 currentLine.clear();
+                //Obtém linha da última gramática criada
+                currentLine.addAll(Arrays.asList(rowList.get(lastIndex)));
+                
                 //Cria nova gramática, se não estiver no último elemento do token
                 if(i != (t.length() - 1)) {
-                    currentLine.addAll(Arrays.asList(rowList.get(lastIndex)));
                     currentIndex = lastIndex;
                     rowList.add(this.addNewGrammar(rowList));
                     lastIndex = rowList.size() - 1;
-                    lastState = rowList.get(lastIndex)[0];
+                    lastState = rowList.get(lastIndex)[0]; //ID da última gramática
                 }
                 //Marca última gramática criada como final, se estiver no último elemento do token
                 else {
-                    currentLine.addAll(Arrays.asList(rowList.get(lastIndex)));
+                    lastState = currentLine.get(0);
                     currentLine.set(0, "*" + currentLine.get(0));
                     rowList.set(lastIndex, this.arrayToVector(currentLine));
                 }
@@ -150,12 +153,111 @@ public class AFND {
         Processa os estados das gramáticas.
         */
         
+        //Cria uma "gramática final"
+        rowList.add(this.addNewGrammar(rowList));
+        //Obtém índice
+        int finalIndex = rowList.size() - 1;
+        //Marca como final
+        currentLine.clear();
+        currentLine.addAll(Arrays.asList(rowList.get(finalIndex)));
+        String idFinal = currentLine.get(0); //ID da gramática final
+        currentLine.set(0, "*" + idFinal);
+        rowList.set(finalIndex, this.arrayToVector(currentLine));
+        
         //Procura por gramáticas e checa a sintaxe
         for(String[] row : srcTable) {
             
-            if(row[0].contains("::=")) {
-                if(isGrammarCorrect(row[0]))
-                    grammarList.addAll(Arrays.asList(row));
+            //Checa sintaxe da 1ª coluna
+            if(this.isGrammarCorrect(row[0]) && row[0].contains("::=")) {
+                
+                //Verifica todas as outas colunas
+                for(int i = 1; i < row.length; i++) {
+                    //Primeiro caractere na coluna
+                    char c = row[i].charAt(0);
+                    //Verifica se é uma letra minúscula
+                    String firstLetter = this.findAlphabetLetter(Character.toString(c), this.lowerAlphabet);
+                    
+                    //Verifica se é símbolo terminal
+                    if(row[i].equals("ε")) {
+                        //Adiciona coluna
+                        String id = Character.toString(row[0].charAt(1)); //ID da linha
+                        grammarList.add(id + "$");
+                        //Pula para a próxima cédula
+                        continue;
+                    }
+                    //Verifica se obedece à sintaxe
+                    if(firstLetter != null && this.isGrammarCorrect(row[i])) {
+                        //Adiciona coluna
+                        grammarList.add(row[i]);
+                    }
+                }
+                
+                //Trabalha com as gramáticas encontradas
+                for(String g : grammarList) {
+                    int line;
+                    int cell;
+                    String key;
+                    String newValue;
+                    
+                    //Se for símbolo terminal
+                    if(g.contains("$")) {
+                        //Procura linha e cédula que possua a gramática
+                        key = Character.toString(g.charAt(0));
+                        line = this.findRowIndex(key, rowList);
+                        cell = labels.indexOf("$");
+                        
+                        //Novo valor da cédula
+                        newValue = idFinal;
+                        
+                        //Novo valor da linha
+                        currentLine.clear();
+                        currentLine.addAll(Arrays.asList(rowList.get(line)));
+                        currentLine.set(cell, newValue);
+                        rowList.set(line, this.arrayToVector(currentLine));
+                        
+                        //Atualiza linha final
+                        currentLine.clear();
+                        currentLine.addAll(Arrays.asList(rowList.get(finalIndex)));
+                        currentLine.set(cell, newValue);
+                        rowList.set(finalIndex, this.arrayToVector(currentLine));
+                        
+                        //Próxima gramática
+                        continue;
+                    }
+                    
+                    //Rótulo da cédula
+                    String currentLabel = Character.toString(g.charAt(0));
+                    //Procura linha e cédula que possua a gramática
+                    key = Character.toString(g.charAt(2));
+                    line = this.findRowIndex(key, rowList);
+                    cell = labels.indexOf(currentLabel);
+                    //Novo valor da cédula
+                    newValue = currentLine.get(cell);
+                    
+                    //Linha foi encontrada
+                    if(line > -1) {
+                        //Obtém a linha
+                        currentLine.clear();
+                        currentLine.addAll(Arrays.asList(rowList.get(line)));
+                        
+                        //Cédula vazia
+                        if(newValue.equals("–"))
+                            newValue = idFinal;
+                        //Cédula ocupada
+                        else if(!newValue.contains(idFinal))
+                            newValue += ";" + idFinal;
+                        
+                        //Armazena novo valor da linha
+                        currentLine.set(cell, newValue);
+                        rowList.set(line, this.arrayToVector(currentLine));
+                    }
+                    
+                    //Atualiza linha final
+                    currentLine.clear();
+                    currentLine.addAll(Arrays.asList(rowList.get(finalIndex)));
+                    currentLine.set(cell, newValue);
+                    rowList.set(finalIndex, this.arrayToVector(currentLine));
+                }
             }
         }
         
@@ -207,6 +309,18 @@ public class AFND {
         }
         
         return result;
+    }
+    
+    //Procura pelo índice de uma linha
+    private int findRowIndex(String key, List<String[]> list) {
+        
+        for(int i = 0; i < list.size(); i++) {
+            if(list.get(i)[0].contains(key))
+                return i; //Linha encontrada
+        }
+        
+        //Linha não encontrada
+        return -1;
     }
     
     //Adiciona nova gramática (sem letra ou alfabeto específico)

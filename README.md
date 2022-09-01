@@ -7,6 +7,11 @@ O objetivo deste trabalho é criar um software que, a partir de um arquivo de en
 
 Para uma descrição mais detalhada, leia o arquivo [Projeto.pdf](https://github.com/chrisGrando/LFA-AFD/blob/main/Projeto.pdf).
 
+## Progresso
+(✅) AFND (contém bugs) <br>
+(❌) Determinização <br>
+(❌) Minimização
+
 ## Compilar/Executar projeto
 
 ### Instalar dependências

@@ -50,17 +50,19 @@ public class AFD {
     /*
     Gera nova tabela de Autômato Finito Determinı́stico, seguindo a ordem abaixo:
     1) Geração de um Autômato Finito Não Determinı́stico (AFND);
-    2) Determinização.
+    2) [NÃO IMPLEMENTADO] Determinização.
+    3) [NÃO IMPLEMENTADO] Minimização.
     */
     public void generate(String[][] srcTable) {
         //Variáveis
         AFND afnd = new AFND();
-        Determination determination = new Determination();
         
         //Autômato Finito Não Determinı́stico
         afnd.create(srcTable);
         //Determinização
-        System.out.println(determination.toString());
+        //<Insira código aqui>
+        //Minimização
+        //<Insira código aqui>
         
         //Salva a nova tabela
         this.newTable = afnd.getAFND();
