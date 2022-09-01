@@ -145,6 +145,7 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         TextPane_Log.setEditable(false);
         TextPane_Log.setBorder(null);
+        TextPane_Log.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         TextPane_Log.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         TextPane_Log.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         TextPane_Log.setMaximumSize(new java.awt.Dimension(622, 450));

@@ -26,14 +26,45 @@ public class AFD {
         return this.tableManager.getReadedTable();
     }
     
-    //Exibe todo o conteúdo da tabela
+    //Exibe todo o conteúdo da tabela (com formatação de espaçamento)
     public String show(String[][] srcTable) {
         String table = "\n";
+        int maxSize = 0;
         
+        //Procura pela cédula de maior tamanho
+        for(int i = 0; i < srcTable.length; i++) {
+            for(int j = 0; j < srcTable[i].length; j++) {
+                if(srcTable[i][j].length() > maxSize)
+                    maxSize = srcTable[i][j].length();
+            }
+        }
+        
+        //Checa se 'maxSize' é ímpar
+        if(maxSize % 2 != 0)
+            maxSize++; //Transforma em par
+        
+        //Monta a tabela
         for (String[] row : srcTable) {
-            table = table + "| ";
+            table = table + "|";
+            
             for (String cell : row) {
-                table = table + cell + " | ";
+                //Quantidade de espaços antes e depois da cédula
+                int evenCell = cell.length() - 1;
+                if(evenCell % 2 != 0)
+                    evenCell++;
+                int spaces = (maxSize - evenCell) / 2;
+                
+                //String de espaço extra (caso tamanho da cédula seja par)
+                String extraSpace = "";
+                if(cell.length() % 2 == 0)
+                    extraSpace = " ";
+                //String de espaços em branco
+                String cellVoid = "";
+                for(int i = 0; i < spaces; i++)
+                    cellVoid += " ";
+                
+                //Monta a cédula
+                table = table + cellVoid + cell + cellVoid + extraSpace + "|";
             }
             table = table + "\n";
         }
