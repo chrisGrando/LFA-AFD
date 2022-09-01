@@ -251,6 +251,19 @@ public class AFND {
                         currentLine.set(cell, newValue);
                         rowList.set(line, this.arrayToVector(currentLine));
                     }
+                    //Linha NÃO foi encontrada
+                    else {
+                        //Cria nova gramática
+                        rowList.add(this.addNewGrammar(rowList, key));
+                        currentLine.clear();
+                        line = rowList.size() - 1;
+                        currentLine.addAll(Arrays.asList(rowList.get(line)));
+                        
+                        //Preenche cédula
+                        newValue = idFinal;
+                        currentLine.set(cell, newValue);
+                        rowList.set(line, this.arrayToVector(currentLine));
+                    }
                     
                     //Atualiza linha final
                     currentLine.clear();
