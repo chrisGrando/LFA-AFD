@@ -145,6 +145,26 @@ public class AFND {
                     rowList.set(lastIndex, this.arrayToVector(currentLine));
                 }
             }
+            //Pega a penúltima gramática criada
+            currentIndex = rowList.size() - 2;
+            currentLine.clear();
+            currentLine.addAll(Arrays.asList(rowList.get(currentIndex)));
+            
+            //Pega o ID da última gramática criada
+            lastState = rowList.get(rowList.size() - 1)[0];
+            String newValue = Character.toString(lastState.charAt(1));
+            
+            //Registra o ID da última gramática criada
+            String s = Character.toString(t.charAt(t.length() - 1));
+            String cell = currentLine.get(labels.indexOf(s));
+            //Se a cédula estiver vazia => Substitui
+            if(cell.equals("–"))
+                currentLine.set(labels.indexOf(s), newValue);
+            //Se já está ocupada => Adiciona
+            else
+                currentLine.set(labels.indexOf(s), cell + ";" + newValue);
+            //Registra linha modificada
+            rowList.set(currentIndex, this.arrayToVector(currentLine));
         }
         
         /*
