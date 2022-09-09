@@ -16,9 +16,7 @@ public class SimpleGUI extends javax.swing.JFrame {
     private final AFD afd;
     private String currentLog = "";
 
-    /*
-    Creates new form SimpleGUI
-    */
+    //Construtor
     public SimpleGUI() {
         afd = new AFD();
         initComponents();
@@ -82,29 +80,46 @@ public class SimpleGUI extends javax.swing.JFrame {
         jPanel.setMaximumSize(new java.awt.Dimension(622, 450));
         jPanel.setMinimumSize(new java.awt.Dimension(622, 450));
         jPanel.setPreferredSize(new java.awt.Dimension(622, 450));
+        jPanel.setLayout(null);
 
         Label_Input.setBackground(new java.awt.Color(255, 255, 255));
         Label_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        Label_Input.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Label_Input.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Label_Input.setText("Input File");
+        jPanel.add(Label_Input);
+        Label_Input.setBounds(10, 30, 80, 30);
 
         Label_Output.setBackground(new java.awt.Color(255, 255, 255));
         Label_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        Label_Output.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Label_Output.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Label_Output.setText("Output File");
+        jPanel.add(Label_Output);
+        Label_Output.setBounds(10, 80, 80, 30);
 
         Label_Log.setBackground(new java.awt.Color(255, 255, 255));
         Label_Log.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Label_Log.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_Log.setText("Log");
+        jPanel.add(Label_Log);
+        Label_Log.setBounds(260, 190, 90, 15);
 
         Field_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Field_Input.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         Field_Input.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de tokens para ABRIR.</p>\n   <p>[1] Caminho relativo: csv/input.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\input.csv</p>\n</html>");
-        Field_Input.setMaximumSize(new java.awt.Dimension(15, 19));
+        Field_Input.setMargin(new java.awt.Insets(3, 0, 0, 0));
+        Field_Input.setMaximumSize(new java.awt.Dimension(64, 21));
+        Field_Input.setName(""); // NOI18N
+        jPanel.add(Field_Input);
+        Field_Input.setBounds(90, 30, 480, 30);
 
         Field_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Field_Output.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         Field_Output.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de AFD para SALVAR.</p>\n   <p>[1] Caminho relativo: csv/output.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\output.csv</p>\n</html>");
-        Field_Output.setMaximumSize(new java.awt.Dimension(15, 19));
+        Field_Output.setMargin(new java.awt.Insets(3, 0, 0, 0));
+        Field_Output.setMaximumSize(new java.awt.Dimension(64, 21));
+        jPanel.add(Field_Output);
+        Field_Output.setBounds(90, 80, 480, 30);
+        Field_Output.getAccessibleContext().setAccessibleName("");
 
         Button_OpenFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_OpenFile.setText("...");
@@ -117,6 +132,8 @@ public class SimpleGUI extends javax.swing.JFrame {
                 Button_OpenFileActionPerformed(evt);
             }
         });
+        jPanel.add(Button_OpenFile);
+        Button_OpenFile.setBounds(575, 30, 40, 30);
 
         Button_SaveFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         Button_SaveFile.setText("...");
@@ -126,22 +143,29 @@ public class SimpleGUI extends javax.swing.JFrame {
                 Button_SaveFileActionPerformed(evt);
             }
         });
+        jPanel.add(Button_SaveFile);
+        Button_SaveFile.setBounds(575, 80, 40, 30);
 
         Button_Start.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        Button_Start.setText("Iniciar");
+        Button_Start.setText("<html><center>Iniciar</center></html>");
         Button_Start.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_Start.setMargin(new java.awt.Insets(2, 0, 0, 0));
+        Button_Start.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        Button_Start.setMaximumSize(new java.awt.Dimension(51, 19));
+        Button_Start.setMinimumSize(new java.awt.Dimension(51, 19));
         Button_Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StartActionPerformed(evt);
             }
         });
+        jPanel.add(Button_Start);
+        Button_Start.setBounds(260, 130, 90, 42);
 
         ScrollPane_Log.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ScrollPane_Log.setAlignmentX(0.0F);
         ScrollPane_Log.setAlignmentY(0.0F);
         ScrollPane_Log.setAutoscrolls(true);
+        ScrollPane_Log.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
 
         TextPane_Log.setEditable(false);
         TextPane_Log.setBorder(null);
@@ -150,63 +174,11 @@ public class SimpleGUI extends javax.swing.JFrame {
         TextPane_Log.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         TextPane_Log.setMaximumSize(new java.awt.Dimension(622, 450));
         TextPane_Log.setMinimumSize(new java.awt.Dimension(622, 450));
-        TextPane_Log.setPreferredSize(new java.awt.Dimension(622, 450));
+        TextPane_Log.setPreferredSize(new java.awt.Dimension(622, 452));
         ScrollPane_Log.setViewportView(TextPane_Log);
 
-        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
-        jPanel.setLayout(jPanelLayout);
-        jPanelLayout.setHorizontalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Label_Input, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_Output, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Field_Output, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-                            .addComponent(Field_Input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Button_SaveFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Button_OpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(264, 264, 264)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Label_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Button_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-        jPanelLayout.setVerticalGroup(
-            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Field_Input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Label_Input))
-                    .addComponent(Button_OpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Field_Output, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Label_Output))
-                    .addComponent(Button_SaveFile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(Button_Start, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(Label_Log)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ScrollPane_Log, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-
-        Field_Output.getAccessibleContext().setAccessibleName("");
+        jPanel.add(ScrollPane_Log);
+        ScrollPane_Log.setBounds(10, 210, 602, 230);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,33 +194,72 @@ public class SimpleGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //Botão para abrir arquivo
-    private void Button_OpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_OpenFileActionPerformed
-        int returnVal = FileChooser_Open.showOpenDialog(this);
+    /*
+    Executa automaticamente ao abrir a janela e faz o seguinte:
+    [*] Preenche os campos de texto, dos arquivos de entrada
+    e saída, com os valores passados por linha de comando (se houverem).
+    [*] Configura o diretório atual da aplicação como diretório padrão
+    para abrir e salvar arquivos.
+    */
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        File myDir = new File(System.getProperty("user.dir"));
+        File defaultFile = new File(myDir.getAbsolutePath() + "/output.csv");
+        
+        //Logs
+        System.out.println("Local: " + myDir);
         System.out.println(evt.toString());
+        this.printLog("Iniciando...\n\n");
         
-        //Mensagem na área de log
-        this.printLog("Selecionando arquivo de entrada...");
+        //Preenche campos de texto
+        Field_Input.setText(Globals.INPUT);
+        Field_Output.setText(Globals.OUTPUT);
         
-        //Obtém o caminho de diretório completo do arquivo
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = FileChooser_Open.getSelectedFile();
-            Field_Input.setText(file.getAbsolutePath());
+        //Diretório padrão
+        FileChooser_Open.setCurrentDirectory(myDir);
+        FileChooser_Save.setCurrentDirectory(myDir);
+        FileChooser_Save.setSelectedFile(defaultFile);
+    }//GEN-LAST:event_formWindowOpened
+
+    //Botão para executar as operações com Autômatos Finitos Determinísticos
+    private void Button_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StartActionPerformed
+        String[][] originalTable;
+        String[][] generatedTable;
+        System.out.println(evt.toString());
+
+        //Checa se o campo de entrada está vazio
+        if(Field_Input.getText().isBlank()) {
+            this.printLog("Erro!!\nCampo de entrada não pode ficar em branco.");
         }
+        //Checa se o campo de saída está vazio
+        else if(Field_Output.getText().isBlank()) {
+            this.printLog("Erro!!\nCampo de saída não pode ficar em branco.");
+        }
+        //Campos de entrada e saída foram preenchidos
         else {
-            //Mensagem na área de log
-            this.printLog("Operação cancelada...");
+            this.printLog("Processando tabelas...");
+            //Executa leitura da tabela
+            afd.input(Field_Input.getText());
+            originalTable = afd.getOriginalTable();
+            //Mostra tabela lida
+            this.printLog("INPUT:" + afd.show(originalTable));
+            //Gera nova tabela
+            afd.generate(originalTable);
+            generatedTable = afd.getGeneratedTable();
+            //Mostra nova tabela
+            this.printLog("OUTPUT:" + afd.show(generatedTable));
+            //Grava nova tabela
+            afd.output(Field_Output.getText(), generatedTable);
         }
-    }//GEN-LAST:event_Button_OpenFileActionPerformed
+    }//GEN-LAST:event_Button_StartActionPerformed
 
     //Botão para salvar arquivo
     private void Button_SaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_SaveFileActionPerformed
         int returnVal = FileChooser_Save.showSaveDialog(this);
         System.out.println(evt.toString());
-        
+
         //Mensagem na área de log
         this.printLog("Configurando arquivo de saída...");
-        
+
         //Obtém o caminho de diretório completo do arquivo
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = FileChooser_Save.getSelectedFile();
@@ -260,61 +271,36 @@ public class SimpleGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Button_SaveFileActionPerformed
 
-    //Botão para executar as operações com Autômatos Finitos Determinísticos
-    private void Button_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StartActionPerformed
-        String[][] originalTable;
-        String[][] generatedTable;
+    //Botão para abrir arquivo
+    private void Button_OpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_OpenFileActionPerformed
+        int returnVal = FileChooser_Open.showOpenDialog(this);
         System.out.println(evt.toString());
-        
-        //Checa se os campos de entrada e saída estão vazios
-        if(Field_Input.getText().isBlank() || Field_Output.getText().isBlank()) {
-            this.printLog("Erro!!\nCampo de entrada e/ou saída não pode ficar em branco.");
-        }
-        //Campos de entrada e saída foram preenchidos
-        else {
-            this.printLog("Processando tabelas...");
-            //Executa leitura da tabela
-            afd.input(Field_Input.getText());
-            originalTable = afd.getOriginalTable();
-            //Mostra tabela lida
-            this.printLog("\nINPUT:" + afd.show(originalTable));
-            //Gera nova tabela
-            afd.generate(originalTable);
-            generatedTable = afd.getGeneratedTable();
-            //Mostra nova tabela
-            this.printLog("\nOUTPUT:" + afd.show(generatedTable));
-            //Grava nova tabela
-            afd.output(Field_Output.getText(), generatedTable);
-        }
-    }//GEN-LAST:event_Button_StartActionPerformed
 
-    /*
-    Executa automaticamente ao abrir a janela e faz o seguinte:
-    [*] Preenche os campos de texto, dos arquivos de entrada
-    e saída, com os valores passados por linha de comando (se houverem).
-    [*] Configura o diretório atual da aplicação como diretório padrão
-    para abrir e salvar arquivos.
-    */
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        File myDir = new File(System.getProperty("user.dir"));
-        File defaultFile = new File(myDir.getAbsolutePath() + "/output.csv");
-        System.out.println(evt.toString());
-        this.printLog("Iniciando...");
-        
-        //Campos de texto
-        Field_Input.setText(Globals.INPUT);
-        Field_Output.setText(Globals.OUTPUT);
-        //Diretório padrão
-        FileChooser_Open.setCurrentDirectory(myDir);
-        FileChooser_Save.setCurrentDirectory(myDir);
-        FileChooser_Save.setSelectedFile(defaultFile);
-        System.out.println("Local: " + myDir);
-    }//GEN-LAST:event_formWindowOpened
+        //Mensagem na área de log
+        this.printLog("Selecionando arquivo de entrada...");
+
+        //Obtém o caminho de diretório completo do arquivo
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = FileChooser_Open.getSelectedFile();
+            Field_Input.setText(file.getAbsolutePath());
+        }
+        else {
+            //Mensagem na área de log
+            this.printLog("Operação cancelada...");
+        }
+    }//GEN-LAST:event_Button_OpenFileActionPerformed
 
     //Exibe mensagens na área de log
     public void printLog(String log) {
+        String blanckLine = "";
+        
+        //Linha em branco
+        if(!this.currentLog.isBlank())
+            blanckLine = "\n\n";
+        
+        //Mensagem
         this.currentLog = TextPane_Log.getText();
-        TextPane_Log.setText(currentLog + log + "\n");
+        TextPane_Log.setText(currentLog + blanckLine + log);
     }
 
     //Exibe o ícone do aplicativo
