@@ -11,6 +11,8 @@ import lfa.AFD;
 import java.io.File;
 import javax.swing.JFileChooser;
 import java.awt.Toolkit;
+import java.awt.GraphicsEnvironment;
+import java.awt.Font;
 
 public class SimpleGUI extends javax.swing.JFrame {
     private final AFD afd;
@@ -20,6 +22,7 @@ public class SimpleGUI extends javax.swing.JFrame {
     public SimpleGUI() {
         afd = new AFD();
         initComponents();
+        setCustomFont();
         setCenter();
         setIcon();
     }
@@ -83,27 +86,27 @@ public class SimpleGUI extends javax.swing.JFrame {
         jPanel.setLayout(null);
 
         Label_Input.setBackground(new java.awt.Color(255, 255, 255));
-        Label_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Label_Input.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Label_Input.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Label_Input.setText("Input File");
         jPanel.add(Label_Input);
         Label_Input.setBounds(10, 30, 80, 30);
 
         Label_Output.setBackground(new java.awt.Color(255, 255, 255));
-        Label_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Label_Output.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Label_Output.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         Label_Output.setText("Output File");
         jPanel.add(Label_Output);
         Label_Output.setBounds(10, 80, 80, 30);
 
         Label_Log.setBackground(new java.awt.Color(255, 255, 255));
-        Label_Log.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Label_Log.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Label_Log.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_Log.setText("Log");
         jPanel.add(Label_Log);
-        Label_Log.setBounds(260, 190, 90, 15);
+        Label_Log.setBounds(260, 190, 90, 17);
 
-        Field_Input.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Field_Input.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Field_Input.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         Field_Input.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de tokens para ABRIR.</p>\n   <p>[1] Caminho relativo: csv/input.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\input.csv</p>\n</html>");
         Field_Input.setMargin(new java.awt.Insets(3, 0, 0, 0));
@@ -112,7 +115,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         jPanel.add(Field_Input);
         Field_Input.setBounds(90, 30, 480, 30);
 
-        Field_Output.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Field_Output.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Field_Output.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         Field_Output.setToolTipText("<html>\n   <p>O caminho de diretório relativo¹/absoluto² do arquivo da tabela de AFD para SALVAR.</p>\n   <p>[1] Caminho relativo: csv/output.csv</p>\n   <p>[2] Caminho absoluto: C:\\Users\\fulano\\Documentos\\CSV\\output.csv</p>\n</html>");
         Field_Output.setMargin(new java.awt.Insets(3, 0, 0, 0));
@@ -121,9 +124,10 @@ public class SimpleGUI extends javax.swing.JFrame {
         Field_Output.setBounds(90, 80, 480, 30);
         Field_Output.getAccessibleContext().setAccessibleName("");
 
-        Button_OpenFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Button_OpenFile.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Button_OpenFile.setText("...");
         Button_OpenFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Button_OpenFile.setMargin(new java.awt.Insets(0, 14, 3, 14));
         Button_OpenFile.setMaximumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setMinimumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setPreferredSize(new java.awt.Dimension(51, 17));
@@ -135,9 +139,10 @@ public class SimpleGUI extends javax.swing.JFrame {
         jPanel.add(Button_OpenFile);
         Button_OpenFile.setBounds(575, 30, 40, 30);
 
-        Button_SaveFile.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Button_SaveFile.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Button_SaveFile.setText("...");
         Button_SaveFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Button_SaveFile.setMargin(new java.awt.Insets(0, 14, 3, 14));
         Button_SaveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_SaveFileActionPerformed(evt);
@@ -146,11 +151,11 @@ public class SimpleGUI extends javax.swing.JFrame {
         jPanel.add(Button_SaveFile);
         Button_SaveFile.setBounds(575, 80, 40, 30);
 
-        Button_Start.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        Button_Start.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Button_Start.setText("<html><center>Iniciar</center></html>");
         Button_Start.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_Start.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        Button_Start.setMargin(new java.awt.Insets(2, 0, 0, 0));
         Button_Start.setMaximumSize(new java.awt.Dimension(51, 19));
         Button_Start.setMinimumSize(new java.awt.Dimension(51, 19));
         Button_Start.addActionListener(new java.awt.event.ActionListener() {
@@ -165,11 +170,11 @@ public class SimpleGUI extends javax.swing.JFrame {
         ScrollPane_Log.setAlignmentX(0.0F);
         ScrollPane_Log.setAlignmentY(0.0F);
         ScrollPane_Log.setAutoscrolls(true);
-        ScrollPane_Log.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        ScrollPane_Log.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
 
         TextPane_Log.setEditable(false);
         TextPane_Log.setBorder(null);
-        TextPane_Log.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        TextPane_Log.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         TextPane_Log.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         TextPane_Log.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         TextPane_Log.setMaximumSize(new java.awt.Dimension(622, 450));
@@ -305,12 +310,49 @@ public class SimpleGUI extends javax.swing.JFrame {
 
     //Exibe o ícone do aplicativo
     private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Icon.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("resources/Icon.png")));
     }
 
     //Centraliza a janela
     private void setCenter() {
         setLocationRelativeTo(null);
+    }
+    
+    //Carrega a fonte personalizada
+    private void setCustomFont() {
+        CustomFont cf = new CustomFont();
+        
+        //Arquivos das fontes
+        Font ttf[] = {
+            cf.load("Cousine"),
+            cf.load("Cousine", cf.BOLD),
+            cf.load("Cousine", cf.ITALIC),
+            cf.load("Cousine", cf.BOLD_ITALIC)
+        };
+        
+        //Obtém ambiente gráfico
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        
+        //Registra as fontes no ambiente gráfico
+        for(int i = 0; i < ttf.length; i++) {
+            if(ttf[i] != null) {
+                //Arquivo da fonte
+                ge.registerFont(ttf[i]);
+                //Tamaho da fonte
+                ttf[i] = ttf[i].deriveFont(12f);
+            }
+        }
+        
+        //Aplica a fonte personalizada nos elementos
+        Label_Input.setFont(ttf[cf.REGULAR]);
+        Label_Output.setFont(ttf[cf.REGULAR]);
+        Label_Log.setFont(ttf[cf.REGULAR]);
+        Field_Input.setFont(ttf[cf.ITALIC]);
+        Field_Output.setFont(ttf[cf.ITALIC]);
+        Button_OpenFile.setFont(ttf[cf.BOLD]);
+        Button_SaveFile.setFont(ttf[cf.BOLD]);
+        Button_Start.setFont(ttf[cf.BOLD_ITALIC]);
+        TextPane_Log.setFont(ttf[cf.REGULAR]);
     }
 
     //Launch app window

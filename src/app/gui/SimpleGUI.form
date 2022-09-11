@@ -116,7 +116,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="text" type="java.lang.String" value="Input File"/>
@@ -133,7 +133,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="text" type="java.lang.String" value="Output File"/>
@@ -150,7 +150,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Log"/>
@@ -164,7 +164,7 @@
         <Component class="javax.swing.JTextField" name="Field_Input">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;   &lt;p&gt;O caminho de diret&#xf3;rio relativo&#xb9;/absoluto&#xb2; do arquivo da tabela de tokens para ABRIR.&lt;/p&gt;&#xa;   &lt;p&gt;[1] Caminho relativo: csv/input.csv&lt;/p&gt;&#xa;   &lt;p&gt;[2] Caminho absoluto: C:\u005cUsers\u005cfulano\u005cDocumentos\u005cCSV\u005cinput.csv&lt;/p&gt;&#xa;&lt;/html&gt;" containsInvalidXMLChars="true"/>
@@ -185,7 +185,7 @@
         <Component class="javax.swing.JTextField" name="Field_Output">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;   &lt;p&gt;O caminho de diret&#xf3;rio relativo&#xb9;/absoluto&#xb2; do arquivo da tabela de AFD para SALVAR.&lt;/p&gt;&#xa;   &lt;p&gt;[1] Caminho relativo: csv/output.csv&lt;/p&gt;&#xa;   &lt;p&gt;[2] Caminho absoluto: C:\u005cUsers\u005cfulano\u005cDocumentos\u005cCSV\u005coutput.csv&lt;/p&gt;&#xa;&lt;/html&gt;" containsInvalidXMLChars="true"/>
@@ -208,11 +208,14 @@
         <Component class="javax.swing.JButton" name="Button_OpenFile">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="..."/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 14, 3, 14]"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[51, 17]"/>
@@ -236,11 +239,14 @@
         <Component class="javax.swing.JButton" name="Button_SaveFile">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="..."/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 14, 3, 14]"/>
             </Property>
           </Properties>
           <Events>
@@ -255,7 +261,7 @@
         <Component class="javax.swing.JButton" name="Button_Start">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;Iniciar&lt;/center&gt;&lt;/html&gt;"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -263,7 +269,7 @@
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[0, 0, 0, 0]"/>
+              <Insets value="[2, 0, 0, 0]"/>
             </Property>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[51, 19]"/>
@@ -292,7 +298,7 @@
             <Property name="alignmentY" type="float" value="0.0"/>
             <Property name="autoscrolls" type="boolean" value="true"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Consolas" size="12" style="0"/>
+              <Font name="Monospaced" size="12" style="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -313,7 +319,7 @@
                   <Border info="null"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Consolas" size="12" style="0"/>
+                  <Font name="Monospaced" size="12" style="0"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor de Texto"/>
