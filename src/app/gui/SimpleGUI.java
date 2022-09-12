@@ -125,9 +125,10 @@ public class SimpleGUI extends javax.swing.JFrame {
         Field_Output.getAccessibleContext().setAccessibleName("");
 
         Button_OpenFile.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        Button_OpenFile.setText("...");
+        Button_OpenFile.setText("<html><center>...</center></html>");
         Button_OpenFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Button_OpenFile.setMargin(new java.awt.Insets(0, 14, 3, 14));
+        Button_OpenFile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Button_OpenFile.setMargin(new java.awt.Insets(0, -4, 3, 0));
         Button_OpenFile.setMaximumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setMinimumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setPreferredSize(new java.awt.Dimension(51, 17));
@@ -140,9 +141,9 @@ public class SimpleGUI extends javax.swing.JFrame {
         Button_OpenFile.setBounds(575, 30, 40, 30);
 
         Button_SaveFile.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        Button_SaveFile.setText("...");
+        Button_SaveFile.setText("<html><center>...</center></html>");
         Button_SaveFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Button_SaveFile.setMargin(new java.awt.Insets(0, 14, 3, 14));
+        Button_SaveFile.setMargin(new java.awt.Insets(0, -4, 3, 0));
         Button_SaveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_SaveFileActionPerformed(evt);
