@@ -7,8 +7,6 @@ package app.gui;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CustomFont {
     public final int REGULAR = 0;
@@ -46,7 +44,7 @@ public class CustomFont {
                 break;
             //Inválido
             default:
-                System.out.println("Invalid style, using fallback to REGULAR...");
+                System.err.println("Invalid style, using fallback to REGULAR...");
                 fullName += "Regular.ttf";
         }
         
@@ -58,8 +56,15 @@ public class CustomFont {
             );
         }
         catch (IOException | FontFormatException error) {
-            String msg = "Font not found...";
-            Logger.getLogger(CustomFont.class.getName()).log(Level.SEVERE, msg, error);
+            //Mensagem de erro
+            String msg = "[ERRO] ";
+            msg += "| Formato incorreto | OU | Fonte personalizada não encontrada |\n";
+            msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
+            System.out.println(msg);
+            
+            //Log de erro
+            System.err.println("### Unable to load custom font ###");
+            error.printStackTrace();
         }
         
         return myFont;

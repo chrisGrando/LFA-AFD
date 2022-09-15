@@ -17,7 +17,7 @@ public class AFD {
     
     //Executa a leitura da tabela de entrada
     public void input(String path) {
-        System.out.println("Action => Read INPUT");
+        System.out.println("AFD => Lendo INPUT...");
         this.tableManager.readInputFile(path);
     }
     
@@ -74,7 +74,7 @@ public class AFD {
     
     //Executa a gravação da tabela de saída
     public void output(String path, String[][] srcTable) {
-        System.out.println("Action => Write OUTPUT");
+        System.out.println("AFD => Gravando OUTPUT...");
         this.tableManager.createOutputFile(path, srcTable);
     }
     

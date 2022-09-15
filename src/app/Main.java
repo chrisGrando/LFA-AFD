@@ -7,20 +7,18 @@ package app;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+      throws UnsupportedEncodingException, Exception {
         //Configura caracteres como "Unicode"
-        try {
-            System.setOut(new PrintStream(System.out, true, "UTF8"));
-        }
-        catch(UnsupportedEncodingException error) {
-            String msg = "Invalid Charset...";
-            Logger.getLogger(Main.class.getName()).log(Level.WARNING, msg, error);
-        }
+        System.setOut(new PrintStream(System.out, true, "UTF8"));
+        
+        //Salva todos os prints e logs de erro em um arquivo de texto
+        TextOutput textOutput = new TextOutput();
+        textOutput.changeOUT("/log/console.log");
+        textOutput.changeERR("/log/error.log");
         
         //Inicializa classe de lógica do aplicativo
         AppLogic app = new AppLogic();

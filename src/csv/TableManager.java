@@ -4,10 +4,9 @@
 **/
 package csv;
 
+import app.Globals;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TableManager {
     private String[][] inputTable;
@@ -18,10 +17,23 @@ public class TableManager {
             TableReader tableReader = new TableReader();
             tableReader.read(path);
             this.inputTable = tableReader.getFullTable();
+            
+            //Flag de erro
+            Globals.ERROR = false;
         }
         catch (IOException | CsvValidationException error) {
-            String msg = "Unable to read the file...";
-            Logger.getLogger(TableManager.class.getName()).log(Level.SEVERE, msg, error);
+            //Mensagem de erro
+            String msg = "[ERRO] ";
+            msg += "Arquivo de entrada não pode ser lido.\n";
+            msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
+            System.out.println(msg);
+            
+            //Log de erro
+            System.err.println("### Unable to read input file ###");
+            error.printStackTrace();
+            
+            //Flag de erro
+            Globals.ERROR = true;
         }
     }
     
@@ -30,10 +42,23 @@ public class TableManager {
         try {
             TableWriter tableWriter = new TableWriter();
             tableWriter.write(path, newTable);
+            
+            //Flag de erro
+            Globals.ERROR = false;
         }
         catch (IOException error) {
-            String msg = "Unable to write the file...";
-            Logger.getLogger(TableManager.class.getName()).log(Level.SEVERE, msg, error);
+            //Mensagem de erro
+            String msg = "[ERRO] ";
+            msg += "Arquivo de saída não pode ser gravado.\n";
+            msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
+            System.out.println(msg);
+            
+            //Log de erro
+            System.err.println("### Unable to write output file ###");
+            error.printStackTrace();
+            
+            //Flag de erro
+            Globals.ERROR = true;
         }
     }
     

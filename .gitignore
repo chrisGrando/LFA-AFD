@@ -11,5 +11,6 @@ nbdist/
 .nb-gradle/
 
 ### Project ###
+**/log/
 csv/*.csv
 !csv/input.csv

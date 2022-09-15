@@ -6,12 +6,15 @@ package app;
 
 import app.gui.SimpleGUI;
 import lfa.AFD;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class AppLogic {
     
     //Inicia a aplicação
     public void start(String[] args) {
-        System.out.println("AppLogic => ON");
+        //Log de início
+        this.initLog();
         
         //Parâmetros passados por linha de comando
         for(String currentArg : args) {
@@ -60,12 +63,12 @@ public class AppLogic {
     
     //Executa a aplicação
     public void exec() {
-        //Exibe a interface gráfica (se ativada)
+        //MODO: Interface Gráfica
         if(Globals.GUI) {
             SimpleGUI hud = new SimpleGUI();
             hud.startWindow();
         }
-        //Executa somente se a interface gráfica estiver desativada
+        //MODO: Linha de Comando
         else {
             AFD afd = new AFD();
             String[][] originalTable;
@@ -73,16 +76,40 @@ public class AppLogic {
             
             //Executa leitura da tabela
             afd.input(Globals.INPUT);
-            originalTable = afd.getOriginalTable();
-            //Mostra tabela lida
-            System.out.println("\nINPUT:" + afd.show(originalTable));
-            //Gera nova tabela
-            afd.generate(originalTable);
-            generatedTable = afd.getGeneratedTable();
-            //Mostra nova tabela
-            System.out.println("\nOUTPUT:" + afd.show(generatedTable));
-            //Grava nova tabela
-            afd.output(Globals.OUTPUT, generatedTable);
+            
+            //Checa se não houveram erros
+            if(!Globals.ERROR) {
+                //Armazena tabela
+                originalTable = afd.getOriginalTable();
+                //Mostra tabela lida
+                System.out.println("\nINPUT:" + afd.show(originalTable));
+                //Gera nova tabela
+                afd.generate(originalTable);
+                generatedTable = afd.getGeneratedTable();
+                //Mostra nova tabela
+                System.out.println("\nOUTPUT:" + afd.show(generatedTable));
+                //Grava nova tabela
+                afd.output(Globals.OUTPUT, generatedTable);
+            }
         }
+    }
+    
+    //Log de início
+    private void initLog() {
+        System.out.println("################## LOG ##################");
+        
+        //Sistema Operacional
+        String osName = System.getProperty("os.name");
+        String osArch = System.getProperty("os.arch");
+        String osVersion = System.getProperty("os.version");
+        System.out.println("SO: " + osName + " | " + osArch + " | " + osVersion);
+        
+        //Data e Hora
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();  
+        System.out.println("Data: " + dtf.format(now));
+        
+        //Classe de lógica iniciada
+        System.out.println("AppLogic => ON");
     }
 }

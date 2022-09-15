@@ -10,6 +10,7 @@ import app.Globals;
 import lfa.AFD;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import java.awt.GraphicsEnvironment;
 import java.awt.Font;
@@ -104,7 +105,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         Label_Log.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_Log.setText("Log");
         jPanel.add(Label_Log);
-        Label_Log.setBounds(260, 190, 90, 17);
+        Label_Log.setBounds(260, 190, 90, 15);
 
         Field_Input.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Field_Input.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -125,10 +126,10 @@ public class SimpleGUI extends javax.swing.JFrame {
         Field_Output.getAccessibleContext().setAccessibleName("");
 
         Button_OpenFile.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        Button_OpenFile.setText("<html><center>...</center></html>");
+        Button_OpenFile.setText("...");
         Button_OpenFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Button_OpenFile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Button_OpenFile.setMargin(new java.awt.Insets(0, -4, 3, 0));
+        Button_OpenFile.setMargin(new java.awt.Insets(0, 0, 0, 0));
         Button_OpenFile.setMaximumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setMinimumSize(new java.awt.Dimension(51, 17));
         Button_OpenFile.setPreferredSize(new java.awt.Dimension(51, 17));
@@ -141,9 +142,9 @@ public class SimpleGUI extends javax.swing.JFrame {
         Button_OpenFile.setBounds(575, 30, 40, 30);
 
         Button_SaveFile.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        Button_SaveFile.setText("<html><center>...</center></html>");
+        Button_SaveFile.setText("...");
         Button_SaveFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Button_SaveFile.setMargin(new java.awt.Insets(0, -4, 3, 0));
+        Button_SaveFile.setMargin(new java.awt.Insets(0, 0, 0, 0));
         Button_SaveFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_SaveFileActionPerformed(evt);
@@ -158,7 +159,6 @@ public class SimpleGUI extends javax.swing.JFrame {
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Button_Start.setMargin(new java.awt.Insets(2, 0, 0, 0));
         Button_Start.setMaximumSize(new java.awt.Dimension(51, 19));
-        Button_Start.setMinimumSize(new java.awt.Dimension(51, 19));
         Button_Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StartActionPerformed(evt);
@@ -212,9 +212,9 @@ public class SimpleGUI extends javax.swing.JFrame {
         File defaultFile = new File(myDir.getAbsolutePath() + "/output.csv");
         
         //Logs
-        System.out.println("Local: " + myDir);
         System.out.println(evt.toString());
-        this.printLog("Iniciando...\n\n");
+        this.printLog("Iniciando janela... [OK]");
+        this.printLog("Diretório atual: " + myDir);
         
         //Preenche campos de texto
         Field_Input.setText(Globals.INPUT);
@@ -234,27 +234,48 @@ public class SimpleGUI extends javax.swing.JFrame {
 
         //Checa se o campo de entrada está vazio
         if(Field_Input.getText().isBlank()) {
-            this.printLog("Erro!!\nCampo de entrada não pode ficar em branco.");
+            this.printLog("[ERRO] Campo de entrada não pode ficar vazio.");
         }
         //Checa se o campo de saída está vazio
         else if(Field_Output.getText().isBlank()) {
-            this.printLog("Erro!!\nCampo de saída não pode ficar em branco.");
+            this.printLog("[ERRO] Campo de saída não pode ficar vazio.");
         }
         //Campos de entrada e saída foram preenchidos
         else {
             this.printLog("Processando tabelas...");
+            
             //Executa leitura da tabela
             afd.input(Field_Input.getText());
-            originalTable = afd.getOriginalTable();
-            //Mostra tabela lida
-            this.printLog("INPUT:" + afd.show(originalTable));
-            //Gera nova tabela
-            afd.generate(originalTable);
-            generatedTable = afd.getGeneratedTable();
-            //Mostra nova tabela
-            this.printLog("OUTPUT:" + afd.show(generatedTable));
-            //Grava nova tabela
-            afd.output(Field_Output.getText(), generatedTable);
+            
+            //Checa se não houveram erros na leitura
+            if(!Globals.ERROR) {
+                //Armazena tabela
+                originalTable = afd.getOriginalTable();
+                //Mostra tabela lida
+                this.printLog("INPUT:" + afd.show(originalTable));
+                //Gera nova tabela
+                afd.generate(originalTable);
+                generatedTable = afd.getGeneratedTable();
+                //Mostra nova tabela
+                this.printLog("OUTPUT:" + afd.show(generatedTable));
+                //Grava nova tabela
+                afd.output(Field_Output.getText(), generatedTable);
+                
+                //Checa se houveram erros na gravação
+                if(Globals.ERROR) {
+                    String msg = "[ERRO] ";
+                    msg += "Não foi possível gravar o arquivo de saída.\n";
+                    msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
+                    this.infoLog(msg);
+                }
+            }
+            //Erro na leitura do arquivo
+            else {
+                String msg = "[ERRO] ";
+                msg += "Não foi possível abrir o arquivo de entrada.\n";
+                msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
+                this.infoLog(msg);
+            }
         }
     }//GEN-LAST:event_Button_StartActionPerformed
 
@@ -263,17 +284,16 @@ public class SimpleGUI extends javax.swing.JFrame {
         int returnVal = FileChooser_Save.showSaveDialog(this);
         System.out.println(evt.toString());
 
-        //Mensagem na área de log
-        this.printLog("Configurando arquivo de saída...");
-
         //Obtém o caminho de diretório completo do arquivo
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = FileChooser_Save.getSelectedFile();
             Field_Output.setText(file.getAbsolutePath());
+            //Mensagem na área de log
+            this.printLog("Configurando arquivo de saída... [OK]");
         }
         else {
             //Mensagem na área de log
-            this.printLog("Operação cancelada...");
+            this.printLog("Configurando arquivo de saída... [CANCELADO]");
         }
     }//GEN-LAST:event_Button_SaveFileActionPerformed
 
@@ -282,30 +302,43 @@ public class SimpleGUI extends javax.swing.JFrame {
         int returnVal = FileChooser_Open.showOpenDialog(this);
         System.out.println(evt.toString());
 
-        //Mensagem na área de log
-        this.printLog("Selecionando arquivo de entrada...");
-
         //Obtém o caminho de diretório completo do arquivo
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = FileChooser_Open.getSelectedFile();
             Field_Input.setText(file.getAbsolutePath());
+            //Mensagem na área de log
+            this.printLog("Selecionando arquivo de entrada... [OK]");
         }
         else {
             //Mensagem na área de log
-            this.printLog("Operação cancelada...");
+            this.printLog("Selecionando arquivo de entrada... [CANCELADO]");
         }
     }//GEN-LAST:event_Button_OpenFileActionPerformed
 
-    //Exibe mensagens na área de log
-    public void printLog(String log) {
+    //Exibe mensagens SOMENTE na área de log
+    public void infoLog(String log) {
         String blanckLine = "";
+        this.currentLog = TextPane_Log.getText();
         
         //Linha em branco
         if(!this.currentLog.isBlank())
             blanckLine = "\n\n";
         
         //Mensagem
+        TextPane_Log.setText(currentLog + blanckLine + log);
+    }
+    
+    //Exibe mensagens na área de log e no console
+    public void printLog(String log) {
+        String blanckLine = "";
         this.currentLog = TextPane_Log.getText();
+        
+        //Linha em branco
+        if(!this.currentLog.isBlank())
+            blanckLine = "\n\n";
+        
+        //Mensagem
+        System.out.println(log);
         TextPane_Log.setText(currentLog + blanckLine + log);
     }
 
@@ -322,6 +355,7 @@ public class SimpleGUI extends javax.swing.JFrame {
     //Carrega a fonte personalizada
     private void setCustomFont() {
         CustomFont cf = new CustomFont();
+        int check = 0;
         
         //Arquivos das fontes
         Font ttf[] = {
@@ -341,19 +375,28 @@ public class SimpleGUI extends javax.swing.JFrame {
                 ge.registerFont(ttf[i]);
                 //Tamaho da fonte
                 ttf[i] = ttf[i].deriveFont(12f);
+                //Fonte registrada com sucesso
+                check++;
             }
         }
         
-        //Aplica a fonte personalizada nos elementos
-        Label_Input.setFont(ttf[cf.REGULAR]);
-        Label_Output.setFont(ttf[cf.REGULAR]);
-        Label_Log.setFont(ttf[cf.REGULAR]);
-        Field_Input.setFont(ttf[cf.ITALIC]);
-        Field_Output.setFont(ttf[cf.ITALIC]);
-        Button_OpenFile.setFont(ttf[cf.BOLD]);
-        Button_SaveFile.setFont(ttf[cf.BOLD]);
-        Button_Start.setFont(ttf[cf.BOLD_ITALIC]);
-        TextPane_Log.setFont(ttf[cf.REGULAR]);
+        //Checa se todas as fontes foram carregadas com sucesso
+        if(check == ttf.length) {
+            //Aplica a fonte personalizada nos elementos
+            Label_Input.setFont(ttf[cf.REGULAR]);
+            Label_Output.setFont(ttf[cf.REGULAR]);
+            Label_Log.setFont(ttf[cf.BOLD_ITALIC]);
+            Field_Input.setFont(ttf[cf.ITALIC]);
+            Field_Output.setFont(ttf[cf.ITALIC]);
+            Button_OpenFile.setFont(ttf[cf.BOLD]);
+            Button_SaveFile.setFont(ttf[cf.BOLD]);
+            Button_Start.setFont(ttf[cf.BOLD_ITALIC]);
+            TextPane_Log.setFont(ttf[cf.REGULAR]);
+
+            //Ajusta o alinhamento dos botões de abrir e salvar
+            Button_OpenFile.setVerticalAlignment(SwingConstants.TOP);
+            Button_SaveFile.setVerticalAlignment(SwingConstants.TOP);
+        }   
     }
 
     //Launch app window
