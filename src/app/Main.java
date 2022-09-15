@@ -14,6 +14,7 @@ public class Main {
       throws UnsupportedEncodingException, Exception {
         //Configura caracteres como "Unicode"
         System.setOut(new PrintStream(System.out, true, "UTF8"));
+        System.setErr(new PrintStream(System.err, true, "UTF8"));
         
         //Salva todos os prints e logs de erro em um arquivo de texto
         TextOutput textOutput = new TextOutput();

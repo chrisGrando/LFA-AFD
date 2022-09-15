@@ -1,0 +1,8 @@
+[Tokens]
+#,se
+#,entao
+#,senao
+
+[Gramáticas]
+<S>::=,a<A>,e<A>
+<A>::=,a<A>,e<A>,ε
