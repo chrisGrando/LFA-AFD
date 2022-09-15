@@ -1,14 +1,14 @@
 # AFD
 **A**utômato **F**inito **D**eterminístico.
 
->**ÍNDICE:**
->1. [Descrição](#about)
->	+ [Progresso](#progress)
->2. [Compilar projeto](#project)
->	1. [Instalar dependências](#install)
->	2. [Abrir & Compilar](#compile)
->3. [Executar](#run)
->4. [Parâmetros de linha de comando](#args)
+**Índice:**
+1. [Descrição](#about)
+	+ [Progresso](#progress)
+2. [Compilar projeto](#project)
+	1. [Instalar dependências](#install)
+	2. [Abrir & Compilar](#compile)
+3. [Executar](#run)
+4. [Parâmetros de linha de comando](#args)
 
 ## Descrição <a name="about"></a>
 
