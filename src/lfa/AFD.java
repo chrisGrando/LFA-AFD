@@ -4,26 +4,18 @@
 **/
 package lfa;
 
+import app.Globals;
+import app.gui.SimpleGUI;
 import csv.TableManager;
 
 public class AFD {
     private final TableManager tableManager;
+    private String[][] originalTable;
     private String[][] newTable;
     
     //Construtor
     public AFD() {
         this.tableManager = new TableManager();
-    }
-    
-    //Executa a leitura da tabela de entrada
-    public void input(String path) {
-        System.out.println("AFD => Lendo INPUT...");
-        this.tableManager.readInputFile(path);
-    }
-    
-    //Retorna a tabela de entrada
-    public String[][] getOriginalTable() {
-        return this.tableManager.getReadedTable();
     }
     
     //Exibe todo o conteúdo da tabela (com formatação de espaçamento)
@@ -68,14 +60,7 @@ public class AFD {
             }
             table = table + "\n";
         }
-        
         return table;
-    }
-    
-    //Executa a gravação da tabela de saída
-    public void output(String path, String[][] srcTable) {
-        System.out.println("AFD => Gravando OUTPUT...");
-        this.tableManager.createOutputFile(path, srcTable);
     }
     
     /*
@@ -99,8 +84,67 @@ public class AFD {
         this.newTable = afnd.getAFND();
     }
     
-    //Retorna a nova tabela gerada
-    public String[][] getGeneratedTable() {
-        return this.newTable;
+    //Executa em modo de linha de comando
+    public void cmdMode() {
+        //Executa leitura da tabela
+        this.tableManager.readInputFile(Globals.INPUT);
+        
+        //Checa se não houveram erros
+        if(!Globals.ERROR) {
+            //Armazena tabela
+            this.originalTable = this.tableManager.getReadedTable();
+            
+            //Mostra tabela lida
+            System.out.println("\nINPUT:" + this.show(this.originalTable));
+            
+            //Gera nova tabela
+            this.generate(this.originalTable);
+            
+            //Mostra nova tabela
+            System.out.println("\nOUTPUT:" + this.show(this.newTable));
+            
+            //Grava nova tabela
+            this.tableManager.createOutputFile(Globals.OUTPUT, this.newTable);
+        }
+    }
+    
+    //Executa em modo de interface gráfica
+    public void guiMode(SimpleGUI hud) {
+        //Executa leitura da tabela
+        this.tableManager.readInputFile(hud.getFieldInput());
+        
+        //Checa se não houveram erros na leitura
+        if(!Globals.ERROR) {
+            //Armazena tabela
+            this.originalTable = this.tableManager.getReadedTable();
+            
+            //Mostra tabela lida
+            System.out.println();
+            hud.printLog("INPUT:" + this.show(this.originalTable));
+            
+            //Gera nova tabela
+            this.generate(this.originalTable);
+            
+            //Mostra nova tabela
+            hud.printLog("OUTPUT:" + this.show(this.newTable));
+            
+            //Grava nova tabela
+            this.tableManager.createOutputFile(hud.getFieldOutput(), this.newTable);
+            
+            //Checa se houveram erros na gravação
+            if(Globals.ERROR) {
+                String msg = "[ERRO] ";
+                msg += "Não foi possível gravar o arquivo de saída.\n";
+                msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
+                hud.infoLog(msg);
+            }
+        }
+        //Erro na leitura do arquivo
+        else {
+            String msg = "[ERRO] ";
+            msg += "Não foi possível abrir o arquivo de entrada.\n";
+            msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
+            hud.infoLog(msg);
+        }
     }
 }

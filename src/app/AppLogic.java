@@ -71,26 +71,7 @@ public class AppLogic {
         //MODO: Linha de Comando
         else {
             AFD afd = new AFD();
-            String[][] originalTable;
-            String[][] generatedTable;
-            
-            //Executa leitura da tabela
-            afd.input(Globals.INPUT);
-            
-            //Checa se não houveram erros
-            if(!Globals.ERROR) {
-                //Armazena tabela
-                originalTable = afd.getOriginalTable();
-                //Mostra tabela lida
-                System.out.println("\nINPUT:" + afd.show(originalTable));
-                //Gera nova tabela
-                afd.generate(originalTable);
-                generatedTable = afd.getGeneratedTable();
-                //Mostra nova tabela
-                System.out.println("\nOUTPUT:" + afd.show(generatedTable));
-                //Grava nova tabela
-                afd.output(Globals.OUTPUT, generatedTable);
-            }
+            afd.cmdMode();
         }
     }
     
@@ -108,6 +89,10 @@ public class AppLogic {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now();  
         System.out.println("Data: " + dtf.format(now));
+        
+        //Diretório local
+        String myDir = System.getProperty("user.dir");
+        System.out.println("Diretório atual: " + myDir);
         
         //Classe de lógica iniciada
         System.out.println("AppLogic => ON");

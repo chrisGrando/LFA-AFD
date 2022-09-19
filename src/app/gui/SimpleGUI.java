@@ -214,7 +214,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         //Logs
         System.out.println(evt.toString());
         this.printLog("Iniciando janela... [OK]");
-        this.printLog("Diretório atual: " + myDir);
+        this.infoLog("Diretório atual: " + myDir);
         
         //Preenche campos de texto
         Field_Input.setText(Globals.INPUT);
@@ -228,54 +228,20 @@ public class SimpleGUI extends javax.swing.JFrame {
 
     //Botão para executar as operações com Autômatos Finitos Determinísticos
     private void Button_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StartActionPerformed
-        String[][] originalTable;
-        String[][] generatedTable;
         System.out.println(evt.toString());
 
         //Checa se o campo de entrada está vazio
-        if(Field_Input.getText().isBlank()) {
+        if(this.getFieldInput().isBlank()) {
             this.printLog("[ERRO] Campo de entrada não pode ficar vazio.");
         }
         //Checa se o campo de saída está vazio
-        else if(Field_Output.getText().isBlank()) {
+        else if(this.getFieldOutput().isBlank()) {
             this.printLog("[ERRO] Campo de saída não pode ficar vazio.");
         }
         //Campos de entrada e saída foram preenchidos
         else {
             this.printLog("Processando tabelas...");
-            
-            //Executa leitura da tabela
-            afd.input(Field_Input.getText());
-            
-            //Checa se não houveram erros na leitura
-            if(!Globals.ERROR) {
-                //Armazena tabela
-                originalTable = afd.getOriginalTable();
-                //Mostra tabela lida
-                this.printLog("INPUT:" + afd.show(originalTable));
-                //Gera nova tabela
-                afd.generate(originalTable);
-                generatedTable = afd.getGeneratedTable();
-                //Mostra nova tabela
-                this.printLog("OUTPUT:" + afd.show(generatedTable));
-                //Grava nova tabela
-                afd.output(Field_Output.getText(), generatedTable);
-                
-                //Checa se houveram erros na gravação
-                if(Globals.ERROR) {
-                    String msg = "[ERRO] ";
-                    msg += "Não foi possível gravar o arquivo de saída.\n";
-                    msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
-                    this.infoLog(msg);
-                }
-            }
-            //Erro na leitura do arquivo
-            else {
-                String msg = "[ERRO] ";
-                msg += "Não foi possível abrir o arquivo de entrada.\n";
-                msg += "Cheque o arquivo \"error.log\" para mais detalhes...";
-                this.infoLog(msg);
-            }
+            afd.guiMode(this);
         }
     }//GEN-LAST:event_Button_StartActionPerformed
 
@@ -314,6 +280,16 @@ public class SimpleGUI extends javax.swing.JFrame {
             this.printLog("Selecionando arquivo de entrada... [CANCELADO]");
         }
     }//GEN-LAST:event_Button_OpenFileActionPerformed
+
+    //Obtém texto do campo de entrada
+    public String getFieldInput() {
+        return Field_Input.getText();
+    }
+    
+    //Obtém texto do campo de saída
+    public String getFieldOutput() {
+        return Field_Output.getText();
+    }
 
     //Exibe mensagens SOMENTE na área de log
     public void infoLog(String log) {
