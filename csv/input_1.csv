@@ -1,8 +1,7 @@
 [Tokens]
 #,se
-#,entao
-#,senao
+#,cair
 
 [Gramáticas]
-<S>::=,a<A>,e<A>
-<A>::=,a<A>,e<A>,ε
+<S>::=,s<A>,x<A>,y<A>
+<A>::=,s<A>,x<A>,y<A>,ε

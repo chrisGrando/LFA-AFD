@@ -7,9 +7,11 @@ package csv;
 import app.Globals;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableManager {
-    private String[][] inputTable;
+    private List<String[]> inputTable = new ArrayList<>();
     
     //Lê e carrega arquivo de entrada
     public void readInputFile(String path) {
@@ -38,7 +40,7 @@ public class TableManager {
     }
     
     //Cria e grava o arquivo de saída
-    public void createOutputFile(String path, String[][] newTable) {
+    public void createOutputFile(String path, List<String[]> newTable) {
         try {
             TableWriter tableWriter = new TableWriter();
             tableWriter.write(path, newTable);
@@ -63,7 +65,7 @@ public class TableManager {
     }
     
     //Retorna a tabela lida
-    public String[][] getReadedTable() {
+    public List<String[]> getReadedTable() {
         return this.inputTable;
     }
 }

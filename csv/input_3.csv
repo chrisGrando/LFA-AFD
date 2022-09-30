@@ -1,12 +1,10 @@
 [Tokens]
-#,var
 #,se
 #,entao
 #,senao
-#,loop
 
 [Gramáticas]
-<S>::=,a<A>,e<A>,i<A>,o<A>,u<A> 
-<A>::=,a<B>,e<B>,i<B>,o<B>,u<B>,ε
-<B>::=,a<C>,e<C>,i<C>,o<C>,u<C>
-<C>::=,ε
+<S>::=,a<A>,e<A>,i<A>,o<A>,u<A>,b<B>,b<A>
+<A>::=,a<A>,e<A>,i<A>,o<A>,u<A>,ε
+<B>::=,a<A>,ε
+<Z>::=,z<Z>

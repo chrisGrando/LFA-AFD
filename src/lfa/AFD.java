@@ -7,11 +7,13 @@ package lfa;
 import app.Globals;
 import app.gui.SimpleGUI;
 import csv.TableManager;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AFD {
     private final TableManager tableManager;
-    private String[][] originalTable;
-    private String[][] newTable;
+    private List<String[]> originalTable;
+    private List<String[]> newTable;
     
     //Construtor
     public AFD() {
@@ -19,15 +21,15 @@ public class AFD {
     }
     
     //Exibe todo o conteúdo da tabela (com formatação de espaçamento)
-    public String show(String[][] srcTable) {
+    public String show(List<String[]> srcTable) {
         String table = "\n";
         int maxSize = 0;
         
         //Procura pela cédula de maior tamanho
-        for(int i = 0; i < srcTable.length; i++) {
-            for(int j = 0; j < srcTable[i].length; j++) {
-                if(srcTable[i][j].length() > maxSize)
-                    maxSize = srcTable[i][j].length();
+        for(String[] row : srcTable) {
+            for(String cell : row) {
+                if(cell.length() > maxSize)
+                    maxSize = cell.length();
             }
         }
         
@@ -69,19 +71,19 @@ public class AFD {
     2) [NÃO IMPLEMENTADO] Determinização.
     3) [NÃO IMPLEMENTADO] Minimização.
     */
-    public void generate(String[][] srcTable) {
+    public void generate(List<String[]> srcTable) {
         //Variáveis
-        AFND afnd = new AFND();
+        //OLD_AFND afnd = new OLD_AFND();
         
         //Autômato Finito Não Determinı́stico
-        afnd.create(srcTable);
+        //afnd.create(srcTable);
         //Determinização
         //<Insira código aqui>
         //Minimização
         //<Insira código aqui>
         
         //Salva a nova tabela
-        this.newTable = afnd.getAFND();
+        this.newTable = srcTable;
     }
     
     //Executa em modo de linha de comando

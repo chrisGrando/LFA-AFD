@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TableReader {
-    private String tableString[][];
+    private List<String[]> readedFile = new ArrayList<>();
     
     //Abre e lê o arquivo
     public void read(String path)
@@ -21,8 +21,6 @@ public class TableReader {
         FileReader inputFile = new FileReader(path);
         CSVReader csvReader = new CSVReader(inputFile);
         String[] nextRecord;
-        List<String[]> lineList = new ArrayList<>();
-        int size = 0;
 
         //Lê linha por linha do arquivo
         while ((nextRecord = csvReader.readNext()) != null) {
@@ -35,19 +33,15 @@ public class TableReader {
                 continue;
             
             //Adiciona linha no array
-            lineList.add(nextRecord);
-            size++;
+            this.readedFile.add(nextRecord);
         }
         
-        //Adiciona todas as linhas em uma matriz de String
-        this.tableString = new String[size][];
-        for (int i = 0; i < size; i++) {
-            this.tableString[i] = lineList.get(i);
-        }
+        //Fecha o arquivo
+        csvReader.close();
     }
     
     //Tabela em formato de String
-    public String[][] getFullTable() {
-        return this.tableString;
+    public List<String[]> getFullTable() {
+        return this.readedFile;
     }
 }

@@ -8,11 +8,12 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class TableWriter {
     
     //Grava o arquivo
-    public void write(String path, String[][] table)
+    public void write(String path, List<String[]> table)
       throws IOException {
         //Classes, objetos e variáveis necessárias para a gravação do arquivo
         CSVWriter csvWriter;
