@@ -5,7 +5,7 @@
 package app;
 
 import app.gui.SimpleGUI;
-import lfa.AFD;
+import lfa.DFA;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -70,7 +70,7 @@ public class AppLogic {
         }
         //MODO: Linha de Comando
         else {
-            AFD afd = new AFD();
+            DFA afd = new DFA();
             afd.cmdMode();
         }
     }

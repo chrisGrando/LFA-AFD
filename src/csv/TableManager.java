@@ -7,11 +7,10 @@ package csv;
 import app.Globals;
 import com.opencsv.exceptions.CsvValidationException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TableManager {
-    private List<String[]> inputTable = new ArrayList<>();
+    private List<String[]> inputTable = null;
     
     //Lê e carrega arquivo de entrada
     public void readInputFile(String path) {

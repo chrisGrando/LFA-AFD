@@ -12,7 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TableReader {
-    private List<String[]> readedFile = new ArrayList<>();
+    private final List<String[]> readedFile;
+    
+    //Construtor
+    public TableReader() {
+        this.readedFile = new ArrayList<>();
+    }
     
     //Abre e lê o arquivo
     public void read(String path)

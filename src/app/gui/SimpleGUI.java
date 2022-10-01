@@ -7,7 +7,7 @@
 package app.gui;
 
 import app.Globals;
-import lfa.AFD;
+import lfa.DFA;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
@@ -16,12 +16,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Font;
 
 public class SimpleGUI extends javax.swing.JFrame {
-    private final AFD afd;
+    private final DFA afd;
     private String currentLog = "";
 
     //Construtor
     public SimpleGUI() {
-        afd = new AFD();
+        afd = new DFA();
         initComponents();
         setCustomFont();
         setCenter();

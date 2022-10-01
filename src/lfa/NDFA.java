@@ -1,6 +1,7 @@
 /** 
 *** @author chrisGrando
-*** Classe destinada para operações com Autômatos Finitos Não Determinísticos.
+*** Classe destinada para operações com Autômatos Finitos Não Determinísticos
+*** (AFND), ou em inglês, Non-deterministic Finite Automaton (NDFA).
 **/
 package lfa;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AFND {
+public class NDFA {
     //Listas
     private List<String[]> myListAFND = new ArrayList<>(); //Tabela Completa
     private List<String> labels = new ArrayList<>();       //Lista de rótulos
@@ -20,7 +21,7 @@ public class AFND {
     private long auxLabel = 1;
     
     //Construtor
-    public AFND() {
+    public NDFA() {
         lowerAlphabet = new char[] {
           'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'

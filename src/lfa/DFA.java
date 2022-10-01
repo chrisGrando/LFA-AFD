@@ -1,22 +1,22 @@
 /** 
 *** @author chrisGrando
-*** Classe destinada para operações com Autômatos Finitos Determinísticos.
+*** Classe destinada para operações com Autômatos Finitos Determinísticos (AFD),
+*** ou em inglês, Deterministic Finite Automaton (DFA).
 **/
 package lfa;
 
 import app.Globals;
 import app.gui.SimpleGUI;
 import csv.TableManager;
-import java.util.ArrayList;
 import java.util.List;
 
-public class AFD {
+public class DFA {
     private final TableManager tableManager;
     private List<String[]> originalTable;
     private List<String[]> newTable;
     
     //Construtor
-    public AFD() {
+    public DFA() {
         this.tableManager = new TableManager();
     }
     
@@ -33,7 +33,7 @@ public class AFD {
             }
         }
         
-        //Checa se 'maxSize' é ímpar
+        //Checa se o tamanho da maior cédula é ímpar
         if(maxSize % 2 != 0)
             maxSize++; //Transforma em par
         
@@ -41,6 +41,7 @@ public class AFD {
         for (String[] row : srcTable) {
             table = table + "|";
             
+            //Monta a linha
             for (String cell : row) {
                 //Quantidade de espaços antes e depois da cédula
                 int evenCell = cell.length() - 1;
@@ -49,19 +50,25 @@ public class AFD {
                 int spaces = (maxSize - evenCell) / 2;
                 
                 //String de espaço extra (caso tamanho da cédula seja par)
-                String extraSpace = "";
+                String evenExtraSpace = "";
                 if(cell.length() % 2 == 0)
-                    extraSpace = " ";
+                    evenExtraSpace = " ";
+                
                 //String de espaços em branco
                 String cellVoid = "";
                 for(int i = 0; i < spaces; i++)
                     cellVoid += " ";
                 
                 //Monta a cédula
-                table = table + cellVoid + cell + cellVoid + extraSpace + "|";
+                String newCell = cellVoid + cell + cellVoid + evenExtraSpace;
+                table += newCell + "|";
             }
+            
+            //Nova linha
             table = table + "\n";
         }
+        
+        //Retorna tabela completa
         return table;
     }
     
@@ -73,7 +80,7 @@ public class AFD {
     */
     public void generate(List<String[]> srcTable) {
         //Variáveis
-        //OLD_AFND afnd = new OLD_AFND();
+        //AFND afnd = new AFND();
         
         //Autômato Finito Não Determinı́stico
         //afnd.create(srcTable);
