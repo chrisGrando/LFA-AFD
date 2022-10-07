@@ -28,8 +28,8 @@ Para uma descrição mais detalhada, leia o arquivo [Projeto.pdf](https://github
 ### Instalar dependências <a name="install"></a>
 Antes de abrir o projeto, é necessário ter instalado alguns softwares no sistema:
 
-- [Liberica JDK 18](https://bell-sw.com/pages/downloads/#/java-18-current) <br>
-(Versão modificada do Java JDK 18 usada nesse projeto)
+- [Liberica JDK](https://bell-sw.com/pages/downloads/) <br>
+(Versão modificada do Java JDK usada nesse projeto, requer versão 19 ou superior)
 - [Apache NetBeans](https://netbeans.apache.org/download/index.html) <br>
 (IDE usada nesse projeto, requer versão 14 ou superior)
 
