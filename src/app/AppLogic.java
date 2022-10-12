@@ -70,8 +70,8 @@ public class AppLogic {
         }
         //MODO: Linha de Comando
         else {
-            DFA afd = new DFA();
-            afd.cmdMode();
+            DFA dfa = new DFA();
+            dfa.cmdMode();
         }
     }
     

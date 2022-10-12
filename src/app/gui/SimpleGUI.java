@@ -16,12 +16,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Font;
 
 public class SimpleGUI extends javax.swing.JFrame {
-    private final DFA afd;
+    private final DFA dfa;
     private String currentLog = "";
 
     //Construtor
     public SimpleGUI() {
-        afd = new DFA();
+        dfa = new DFA();
         initComponents();
         setCustomFont();
         setCenter();
@@ -105,7 +105,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         Label_Log.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_Log.setText("Log");
         jPanel.add(Label_Log);
-        Label_Log.setBounds(260, 190, 90, 15);
+        Label_Log.setBounds(260, 190, 90, 17);
 
         Field_Input.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Field_Input.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -154,7 +154,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         Button_SaveFile.setBounds(575, 80, 40, 30);
 
         Button_Start.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        Button_Start.setText("<html><center>Iniciar</center></html>");
+        Button_Start.setText("Executar");
         Button_Start.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Button_Start.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Button_Start.setMargin(new java.awt.Insets(2, 0, 0, 0));
@@ -241,7 +241,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         //Campos de entrada e saída foram preenchidos
         else {
             this.printLog("Processando tabelas...");
-            afd.guiMode(this);
+            dfa.guiMode(this);
         }
     }//GEN-LAST:event_Button_StartActionPerformed
 

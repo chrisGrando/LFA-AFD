@@ -29,93 +29,92 @@ public class TextOutput {
                 stdout.println();
                 super.print("\n");
             }
-            @Override public void println(Object x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(Object obj) {
+                stdout.println(obj);
+                super.print(obj);
                 super.print("\n");
             }
-            @Override public void println(String x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(String s) {
+                stdout.println(s);
+                super.print(s);
                 super.print("\n");
             }
-            @Override public void println(boolean x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(boolean b) {
+                stdout.println(b);
+                super.print(b);
                 super.print("\n");
             }
-            @Override public void println(char x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(char c) {
+                stdout.println(c);
+                super.print(c);
                 super.print("\n");
             }
-            @Override public void println(char[] x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(char[] cv) {
+                stdout.println(cv);
+                super.print(cv);
                 super.print("\n");
             }
-            @Override public void println(double x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(double d) {
+                stdout.println(d);
+                super.print(d);
                 super.print("\n");
             }
-            @Override public void println(float x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(float f) {
+                stdout.println(f);
+                super.print(f);
                 super.print("\n");
             }
-            @Override public void println(int x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(int i) {
+                stdout.println(i);
+                super.print(i);
                 super.print("\n");
             }
-            @Override public void println(long x) {
-                stdout.println(x);
-                super.print(x);
+            @Override public void println(long l) {
+                stdout.println(l);
+                super.print(l);
                 super.print("\n");
             }
             //PRINT
-            @Override public void print(Object x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(Object obj) {
+                stdout.print(obj);
+                super.print(obj);
             }
-            @Override public void print(String x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(String s) {
+                stdout.print(s);
+                super.print(s);
             }
-            @Override public void print(boolean x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(boolean b) {
+                stdout.print(b);
+                super.print(b);
             }
-            @Override public void print(char x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(char c) {
+                stdout.print(c);
+                super.print(c);
             }
-            @Override public void print(char[] x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(char[] cv) {
+                stdout.print(cv);
+                super.print(cv);
             }
-            @Override public void print(double x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(double d) {
+                stdout.print(d);
+                super.print(d);
             }
-            @Override public void print(float x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(float f) {
+                stdout.print(f);
+                super.print(f);
             }
-            @Override public void print(int x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(int i) {
+                stdout.print(i);
+                super.print(i);
             }
-            @Override public void print(long x) {
-                stdout.print(x);
-                super.print(x);
+            @Override public void print(long l) {
+                stdout.print(l);
+                super.print(l);
             }
         };
         
         //Substitui antiga saída de texto
         System.setOut(ps);
-        
     }
     
     //Log de erros
@@ -138,87 +137,87 @@ public class TextOutput {
                 stderr.println();
                 super.print("\n");
             }
-            @Override public void println(Object x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(Object obj) {
+                stderr.println(obj);
+                super.print(obj);
                 super.print("\n");
             }
-            @Override public void println(String x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(String s) {
+                stderr.println(s);
+                super.print(s);
                 super.print("\n");
             }
-            @Override public void println(boolean x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(boolean b) {
+                stderr.println(b);
+                super.print(b);
                 super.print("\n");
             }
-            @Override public void println(char x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(char c) {
+                stderr.println(c);
+                super.print(c);
                 super.print("\n");
             }
-            @Override public void println(char[] x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(char[] cv) {
+                stderr.println(cv);
+                super.print(cv);
                 super.print("\n");
             }
-            @Override public void println(double x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(double d) {
+                stderr.println(d);
+                super.print(d);
                 super.print("\n");
             }
-            @Override public void println(float x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(float f) {
+                stderr.println(f);
+                super.print(f);
                 super.print("\n");
             }
-            @Override public void println(int x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(int i) {
+                stderr.println(i);
+                super.print(i);
                 super.print("\n");
             }
-            @Override public void println(long x) {
-                stderr.println(x);
-                super.print(x);
+            @Override public void println(long l) {
+                stderr.println(l);
+                super.print(l);
                 super.print("\n");
             }
             //PRINT
-            @Override public void print(Object x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(Object obj) {
+                stderr.print(obj);
+                super.print(obj);
             }
-            @Override public void print(String x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(String s) {
+                stderr.print(s);
+                super.print(s);
             }
-            @Override public void print(boolean x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(boolean b) {
+                stderr.print(b);
+                super.print(b);
             }
-            @Override public void print(char x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(char c) {
+                stderr.print(c);
+                super.print(c);
             }
-            @Override public void print(char[] x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(char[] cv) {
+                stderr.print(cv);
+                super.print(cv);
             }
-            @Override public void print(double x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(double d) {
+                stderr.print(d);
+                super.print(d);
             }
-            @Override public void print(float x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(float f) {
+                stderr.print(f);
+                super.print(f);
             }
-            @Override public void print(int x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(int i) {
+                stderr.print(i);
+                super.print(i);
             }
-            @Override public void print(long x) {
-                stderr.print(x);
-                super.print(x);
+            @Override public void print(long l) {
+                stderr.print(l);
+                super.print(l);
             }
         };
         

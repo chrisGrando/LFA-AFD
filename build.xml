@@ -10,6 +10,7 @@
 <project name="LFA" default="default" basedir=".">
     <description>Builds, tests, and runs the project LFA.</description>
     <import file="nbproject/build-impl.xml"/>
+    <property name="platforms.default_platform.home" location="${java.home}/.."/>
     <!--
 
     There exist several targets which are by default empty and which can be 
