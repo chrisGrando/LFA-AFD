@@ -105,7 +105,7 @@ public class SimpleGUI extends javax.swing.JFrame {
         Label_Log.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_Log.setText("Log");
         jPanel.add(Label_Log);
-        Label_Log.setBounds(260, 190, 90, 17);
+        Label_Log.setBounds(260, 190, 90, 15);
 
         Field_Input.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         Field_Input.setHorizontalAlignment(javax.swing.JTextField.LEFT);

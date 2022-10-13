@@ -6,12 +6,11 @@
 package app;
 
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 
 public class Main {
 
     public static void main(String[] args)
-      throws UnsupportedEncodingException, Exception {
+      throws Exception {
         //Configura caracteres como "Unicode"
         System.setOut(new PrintStream(System.out, true, "UTF8"));
         System.setErr(new PrintStream(System.err, true, "UTF8"));

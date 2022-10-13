@@ -11,14 +11,14 @@ import java.util.List;
 
 public class NDFA {
     //Listas
-    private List<String[]> myListAFND = new ArrayList<>(); //Tabela Completa
+    private List<String[]> myListNDFA = new ArrayList<>(); //Tabela Completa
     private List<String> labels = new ArrayList<>();       //Lista de rótulos
     private List<String> tokenList = new ArrayList<>();    //Lista de tokens
     private List<String> grammarList = new ArrayList<>();  //Lista de gramáticas
     //Alfabetos
     private final char[] lowerAlphabet;
     private final char[] upperAlphabet;
-    private long auxLabel = 1;
+    private long numericAlphabet = 1;
     
     //Construtor
     public NDFA() {
@@ -55,41 +55,175 @@ public class NDFA {
         }*/
     }
     
-    //Checa se a sintaxe da gramática está correta
-    private boolean isGrammarCorrect(String txt) {
+    //Checa se a nomeação da regra de gramática está correta (ex.: <S>::=, <11>::=)
+    private boolean isGrammarRuleCorrect(String txt) {
         int check = 0;
         boolean result = false;
         
         for(char c : txt.toCharArray()) {
+            /*
+            Condições para pular o loop atual:
+            1) Espaço em branco.
+            2) Número com mais de um dígito (ex.: 101).
+            */
             
+            //Espaço em branco
+            if(Character.isSpaceChar(c))
+                continue;
+            
+            //Número com mais de um dígito
+            if(check == 2 && Character.isDigit(c))
+                continue;
+            
+            //Checa regra
             switch (check) {
-                //Começa com letra minúscula?
+                //Começa com "<"?
                 case 0 -> {
-                    String l = this.findAlphabetLetter(Character.toString(c), this.lowerAlphabet);
-                    if(l != null)
+                    if(Character.compare(c, '<') == 0)
                         check++;
+                    else
+                        check = -1; //Regra inválida
+                }
+                //Segue com letra maiúscula ou número?
+                case 1 -> {
+                    //Letra maiúscula
+                    String curChar = this.findAlphabetLetter(
+                        Character.toString(c),
+                        this.upperAlphabet
+                    );
+                    if(curChar != null)
+                        check++;
+                    
+                    //Número
+                    else if(Character.isDigit(c))
+                        check++;
+                    
+                    //Regra inválida
+                    else
+                        check = -1;
+                }
+                //Segue com ">"?
+                case 2 -> {
+                    if(Character.compare(c, '>') == 0)
+                        check++;
+                    else
+                        check = -1; //Regra inválida
+                }
+                //Segue com ":"?
+                case 3 -> {
+                    if(Character.compare(c, ':') == 0)
+                        check++;
+                    else
+                        check = -1; //Regra inválida
+                }
+                //Segue com outro ":"?
+                case 4 -> {
+                    if(Character.compare(c, ':') == 0)
+                        check++;
+                    else
+                        check = -1; //Regra inválida
+                }
+                //Termina com "="?
+                case 5 -> {
+                    if(Character.compare(c, '=') == 0)
+                        check++;
+                    else
+                        check = -1; //Regra inválida
+                }
+                //Regra inválida OU qualquer coisa além do "="
+                default -> {
+                    check = -1;
+                    break;
+                }
+            }
+        }
+        
+        //Gramática está correta
+        if(check == 6) {
+            result = true;
+        }
+        
+        return result;
+    }
+    
+    //Checa se a sintaxe da gramática está correta (ex.: x<S>, 1<A>, 0<10>)
+    private boolean isGrammarSyntaxCorrect(String txt) {
+        int check = 0;
+        boolean result = false;
+        
+        for(char c : txt.toCharArray()) {
+            /*
+            Condições para pular o loop atual:
+            1) Espaço em branco.
+            2) Número com mais de um dígito (ex.: 101).
+            */
+            
+            //Espaço em branco
+            if(Character.isSpaceChar(c))
+                continue;
+            
+            //Número com mais de um dígito
+            if(check == 1 || check == 3) {
+                if(Character.isDigit(c))
+                    continue;
+            }
+            
+            //Checa sintaxe
+            switch (check) {
+                //Começa com letra minúscula ou número?
+                case 0 -> {
+                    //Letra minúscula
+                    String curChar = this.findAlphabetLetter(
+                        Character.toString(c),
+                        this.lowerAlphabet
+                    );
+                    if(curChar != null)
+                        check++;
+                    
+                    //Número
+                    else if(Character.isDigit(c))
+                        check++;
+                    
+                    //Sintaxe incorreta
+                    else
+                        check = -1;
                 }
                 //Segue com "<"?
                 case 1 -> {
                     if(Character.compare(c, '<') == 0)
                         check++;
                     else
-                        check = 0;
+                        check = -1; //Sintaxe incorreta
                 }
-                //Possui letra maiúscula?
+                //Segue com letra maiúscula ou número?
                 case 2 -> {
-                    String l = this.findAlphabetLetter(Character.toString(c), this.upperAlphabet);
-                    if(l != null)
+                    //Letra maiúscula
+                    String curChar = this.findAlphabetLetter(
+                        Character.toString(c),
+                        this.upperAlphabet
+                    );
+                    if(curChar != null)
                         check++;
+                    
+                    //Número
+                    else if(Character.isDigit(c))
+                        check++;
+                    
+                    //Sintaxe incorreta
                     else
-                        check = 0;
+                        check = -1;
                 }
                 //Termina com ">"?
                 case 3 -> {
                     if(Character.compare(c, '>') == 0)
                         check++;
                     else
-                        check = 0;
+                        check = -1; //Sintaxe incorreta
+                }
+                //Sintaxe incorreta OU qualquer coisa além do ">"
+                default -> {
+                    check = -1;
+                    break;
                 }
             }
         }
@@ -101,6 +235,7 @@ public class NDFA {
         
         return result;
     }
+    
     //Adiciona nova gramática (SEM letra(s) específica(s))
     private String[] addNewGrammar(List<String[]> list) {
         return this.addNewGrammar(list, null);
@@ -136,8 +271,8 @@ public class NDFA {
         if(grammar == null) {
             grammar = new String[size];
             //...Será usado um número no lugar
-            grammar[0] = Long.toString(this.auxLabel);
-            this.auxLabel++;
+            grammar[0] = Long.toString(this.numericAlphabet);
+            this.numericAlphabet++;
         }
         
         //Preenche todas as outras cédulas com "–"
@@ -191,6 +326,6 @@ public class NDFA {
     
     //Retorna AFND criado
     public List<String[]> getAFND() {
-        return this.myListAFND;
+        return this.myListNDFA;
     }
 }
