@@ -13,7 +13,9 @@ import java.util.List;
 public class DFA {
     private final TableManager tableManager;
     private List<String[]> originalTable;
-    private List<String[]> newTable;
+    private List<String[]> ndfaTable;
+    //private List<String[]> dtTable;
+    //private List<String[]> finalTable;
     
     //Construtor
     public DFA() {
@@ -76,21 +78,21 @@ public class DFA {
     Gera nova tabela de Autômato Finito Determinı́stico, seguindo a ordem abaixo:
     1) Geração de um Autômato Finito Não Determinı́stico (AFND);
     2) [NÃO IMPLEMENTADO] Determinização.
-    3) [NÃO IMPLEMENTADO] Minimização.
+    3) [NÃO IMPLEMENTADO] Simplificação.
     */
     public void generate(List<String[]> srcTable) {
         //Variáveis
-        //AFND afnd = new AFND();
+        NDFA ndfa = new NDFA();
         
         //Autômato Finito Não Determinı́stico
-        //afnd.create(srcTable);
+        ndfa.create(srcTable);
         //Determinização
         //<Insira código aqui>
         //Minimização
         //<Insira código aqui>
         
         //Salva a nova tabela
-        this.newTable = srcTable;
+        this.ndfaTable = ndfa.getNDFA();
     }
     
     //Executa em modo de linha de comando
@@ -104,16 +106,19 @@ public class DFA {
             this.originalTable = this.tableManager.getReadedTable();
             
             //Mostra tabela lida
-            System.out.println("\nINPUT:" + this.show(this.originalTable));
+            System.out.println("\nINPUT:\n" + this.show(this.originalTable));
             
             //Gera nova tabela
             this.generate(this.originalTable);
             
-            //Mostra nova tabela
-            System.out.println("\nOUTPUT:" + this.show(this.newTable));
+            //Exibe a nova tabela sendo construída passo a passo
+            System.out.println("********************************************************");
+            System.out.println("OUTPUT:");
+            //Autômato Finito Não Determinı́stico
+            System.out.println("\n[AFND]" + this.show(this.ndfaTable));
             
             //Grava nova tabela
-            this.tableManager.createOutputFile(Globals.OUTPUT, this.newTable);
+            this.tableManager.createOutputFile(Globals.OUTPUT, this.ndfaTable);
         }
     }
     
@@ -129,16 +134,17 @@ public class DFA {
             
             //Mostra tabela lida
             System.out.println();
-            hud.printLog("INPUT:" + this.show(this.originalTable));
+            hud.printLog("INPUT:\n" + this.show(this.originalTable));
             
             //Gera nova tabela
             this.generate(this.originalTable);
             
-            //Mostra nova tabela
-            hud.printLog("OUTPUT:" + this.show(this.newTable));
-            
+            //Exibe a nova tabela sendo construída passo a passo
+            hud.printLog("********************************************************");
+            //Autômato Finito Não Determinı́stico
+            hud.printLog("OUTPUT: \n\n[AFND]" + this.show(this.ndfaTable));
             //Grava nova tabela
-            this.tableManager.createOutputFile(hud.getFieldOutput(), this.newTable);
+            this.tableManager.createOutputFile(hud.getFieldOutput(), this.ndfaTable);
             
             //Checa se houveram erros na gravação
             if(Globals.ERROR) {
