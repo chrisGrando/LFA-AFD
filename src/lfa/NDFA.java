@@ -11,7 +11,7 @@ import java.util.List;
 public class NDFA {
     //Listas
     private List<String[]> myListNDFA = new ArrayList<>(); //Tabela Completa
-    private List<String> labels = new ArrayList<>();       //Lista de rótulos
+    private List<String> labels; //Lista de rótulos
     //Alfabetos
     private final char[] lowerAlphabet;
     private final char[] upperAlphabet;
@@ -46,7 +46,7 @@ public class NDFA {
             
             //Tokens
             if(line[0].equals("#") && line.length > 1) {
-                cell = line[1];
+                cell = line[1].toLowerCase();
                 
                 //Percorre e registra cada letra do token como rótulo
                 for(char c : cell.toCharArray()) {
@@ -76,8 +76,7 @@ public class NDFA {
                         continue;
                     
                     //Adiciona rótulo (sem repetir)
-                    char c = cell.charAt(0);
-                    String l = Character.toString(c);
+                    String l = Character.toString(cell.charAt(0));
                     if(!this.labels.contains(l))
                         this.labels.add(l);
                 }
@@ -93,6 +92,136 @@ public class NDFA {
         Monta as próximas linhas da tabela, criando gramáticas a partir
         de tokens.
         */
+        boolean isFirstToken = true;
+        List<String> tokenList = new ArrayList<>();
+        String previousLetter = "";
+        
+        //Obtém lista dos tokens
+        for(String[] line : srcTable) {
+            if(line[0].equals("#") && line.length > 1)
+                tokenList.add(line[1].toLowerCase());
+        }
+        
+        //Gera gramáticas para cada letra de cada token
+        for(String token : tokenList) {
+            for(int i = 0; i < token.length(); i++) {
+                //Primeiro token
+                if(isFirstToken) {
+                    //Desativa gatilho
+                    isFirstToken = false;
+                    
+                    //Cria primeira gramática
+                    String[] grammar = this.addNewGrammar(this.myListNDFA, "S");
+                    this.myListNDFA.add(grammar);
+                    previousLetter = "S";
+                }
+                
+                //Cria nova gramática para o próximo item
+                String[] grammar = this.addNewGrammar(this.myListNDFA);
+                this.myListNDFA.add(grammar);
+                
+                //Adiciona ponteiro na gramática anterior
+                this.myListNDFA = this.addPointerOnList(
+                    this.myListNDFA,
+                    previousLetter,
+                    Character.toString(token.charAt(i)),
+                    grammar[0]
+                );
+                
+                //Atualiza variável da gramática anterior
+                previousLetter = grammar[0];
+            }
+            
+            /*
+            Após a última letra do token, marca a última gramática criada
+            como final.
+            */
+            int last = this.myListNDFA.size() -1;
+            String row = this.myListNDFA.get(last)[0];
+            this.myListNDFA = this.setAsFinal(myListNDFA, row);
+            
+            /*
+            Se não for o último token da lista, cria mais uma gramática e
+            atualiza variável da gramática anterior.
+            */
+            String finalItemOnList = tokenList.get(tokenList.size() - 1);
+            if(!token.equals(finalItemOnList)) {
+                String[] grammar = this.addNewGrammar(this.myListNDFA);
+                this.myListNDFA.add(grammar);
+                previousLetter = grammar[0];
+            }
+        }
+        
+    }
+    
+    //Marca gramática como final (ex.: *F)
+    private List<String[]> setAsFinal(List<String[]> list, String row) {
+        int idRow = -1;
+        
+        //Número da linha
+        for(String[] line : list) {
+            if(line[0].equals(row)) {
+                idRow = list.indexOf(line);
+                break;
+            }
+        }
+        
+        //Se a linha for encontrada, marca como final
+        if(idRow > -1) {
+            String cell = list.get(idRow)[0];
+            String[] aux = list.get(idRow);
+            
+            //Adiciona asterísco
+            cell = "*" + cell;
+            aux[0] = cell;
+            
+            //Atualiza a lista
+            list.set(idRow, aux);
+        }
+        
+        //Retorna a lista (com ou sem modificações)
+        return list;
+    }
+    
+    //Adiciona um ponteiro no item de uma gramática para outra
+    private List<String[]> addPointerOnList
+      (List<String[]> list, String row, String item, String pointer) {
+        int idRow = -1;
+        int idLabel = -1;
+        
+        //Número da linha e da coluna
+        for(String[] line : list) {
+            if(line[0].equals(row)) {
+                //Linha
+                idRow = list.indexOf(line);
+                
+                //Coluna
+                idLabel = this.labels.indexOf(item);
+                
+                //Interrompe loop
+                break;
+            }
+        }
+        
+        //Se a linha e a coluna forem encontradas, adiciona o ponteiro
+        if(idRow > -1 && idLabel > -1) {
+            String cell = list.get(idRow)[idLabel];
+            String[] aux = list.get(idRow);
+            
+            //Cédula está vazia
+            if(cell.equals("–"))
+                cell = pointer;
+            //Cédula já está ocupada
+            else
+                cell += ";" + pointer;
+            
+            //Atualiza a lista
+            aux[idLabel] = cell;
+            list.set(idRow, aux);
+        }
+        
+        //Retorna a lista (com ou sem modificações)
+        return list;
     }
     
     //Checa se é número ou letra minúscula válida como rótulo
@@ -298,26 +427,23 @@ public class NDFA {
     
     //Adiciona nova gramática (SEM letra(s) específica(s))
     private String[] addNewGrammar(List<String[]> list) {
-        return this.addNewGrammar(list, null);
+        //Alfabeto maiúsculo padrão (versão string)
+        String upperAux = "";
+        
+        //Char array para string
+        for(char c : this.upperAlphabet)
+            upperAux += Character.toString(c);
+        
+        return this.addNewGrammar(list, upperAux);
     }
     
     //Adiciona nova gramática (COM letra(s) específica(s))
     private String[] addNewGrammar(List<String[]> list, String custom) {
-        char[] auxAlphabet;
         String[] grammar = null;
         int size = list.get(0).length;
         
-        //Se for pedido uma ou várias letras específicas
-        if(custom != null) {
-            auxAlphabet = custom.toCharArray();
-        }
-        //Usar alfabeto padrão se não houverem especificações
-        else {
-            auxAlphabet = this.upperAlphabet;
-        }
-        
         //Procura por uma letra não usada para adicionar à lista
-        for(char c : auxAlphabet) {
+        for(char c : custom.toCharArray()) {
             if(!this.isAlreadyIncluded(c, list)) {
                 grammar = new String[size];
                 //Letra da nova gramática
@@ -328,36 +454,28 @@ public class NDFA {
         }
         
         /*
-        Caso nenhuma letra disponível seja encontrada, e não tenha sido pedido
-        um alfabeto específico, será usado um número no lugar.
+        Caso nenhuma letra disponível seja encontrada, será usado um número
+        no lugar.
         */
-        if(grammar == null && custom == null) {
-            //Executa até encontrar um número disponível
-            while(grammar == null) {
-                //Converte número longo em String
-                String long_na = Long.toString(this.numericAlphabet);
-                
-                //Número já foi usado
-                if(this.isAlreadyIncluded(long_na, list)) {
-                   this.numericAlphabet++;
-                   continue;
-                }
-                
-                //Número disponível
-                grammar = new String[size];
-                grammar[0] = long_na;
-                this.numericAlphabet++;
+        while(grammar == null) {
+            //Converte número longo em String
+            String long_na = Long.toString(this.numericAlphabet);
+
+            //Número já foi usado
+            if(this.isAlreadyIncluded(long_na, list)) {
+               this.numericAlphabet++;
+               continue;
             }
+
+            //Número disponível
+            grammar = new String[size];
+            grammar[0] = long_na;
+            this.numericAlphabet++;
         }
         
-        /*
-        Caso uma gramática tenha sido criada (valor não-nulo),
-        preenche todas as outras cédulas com "–".
-        */
-        if(grammar != null) {
-            for(int i = 1; i < size; i++) 
-                grammar[i] = "–";
-        }
+        //Preenche todas as outras cédulas com "–"
+        for(int i = 1; i < size; i++) 
+            grammar[i] = "–";
         
         //Retorna nova gramática
         return grammar;
