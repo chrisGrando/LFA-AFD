@@ -10,19 +10,26 @@ import java.util.List;
 
 public class NDFA {
     //Listas
-    private List<String[]> myListNDFA = new ArrayList<>(); //Tabela Completa
+    private List<String[]> arrayListNDFA; //Tabela AFND completa
     private List<String> labels; //Lista de rótulos
     //Alfabetos
     private final char[] lowerAlphabet;
     private final char[] upperAlphabet;
-    private long numericAlphabet = 0;
+    private int numericAlphabet = 0;
     
     //Construtor
     public NDFA() {
+        //Inicializa as listas
+        arrayListNDFA = new ArrayList<>();
+        labels = new ArrayList<>();
+        
+        //Alfabeto minúsculo
         lowerAlphabet = new char[] {
           'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
         };
+        
+        //Alfabeto maiúsculo
         upperAlphabet = new char[] {
           'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
           'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
@@ -37,7 +44,6 @@ public class NDFA {
         Monta a primeira linha da tabela, composta por letras minúsculas
         e números.
         */
-        this.labels = new ArrayList<>();
         this.labels.add("δ"); //Primeira cédula da tabela
         
         //Percorre cada linha da tabela de entrada
@@ -84,7 +90,7 @@ public class NDFA {
         }
         
         //Salva rótulos na tabela
-        this.myListNDFA.add(this.arrayListToVector(this.labels));
+        this.arrayListNDFA.add(this.arrayListToVector(this.labels));
         
         /*
         TOKENS
@@ -111,18 +117,18 @@ public class NDFA {
                     isFirstToken = false;
                     
                     //Cria primeira gramática
-                    String[] grammar = this.addNewGrammar(this.myListNDFA, "S");
-                    this.myListNDFA.add(grammar);
+                    String[] grammar = this.addNewGrammar(this.arrayListNDFA, "S");
+                    this.arrayListNDFA.add(grammar);
                     previousLetter = "S";
                 }
                 
                 //Cria nova gramática para o próximo item
-                String[] grammar = this.addNewGrammar(this.myListNDFA);
-                this.myListNDFA.add(grammar);
+                String[] grammar = this.addNewGrammar(this.arrayListNDFA);
+                this.arrayListNDFA.add(grammar);
                 
                 //Adiciona ponteiro na gramática anterior
-                this.myListNDFA = this.addPointerOnList(
-                    this.myListNDFA,
+                this.arrayListNDFA = this.addPointerOnList(
+                    this.arrayListNDFA,
                     previousLetter,
                     Character.toString(token.charAt(i)),
                     grammar[0]
@@ -136,9 +142,9 @@ public class NDFA {
             Após a última letra do token, marca a última gramática criada
             como final.
             */
-            int last = this.myListNDFA.size() -1;
-            String row = this.myListNDFA.get(last)[0];
-            this.myListNDFA = this.setAsFinal(myListNDFA, row);
+            int last = this.arrayListNDFA.size() - 1;
+            String row = this.arrayListNDFA.get(last)[0];
+            this.arrayListNDFA = this.setAsFinal(this.arrayListNDFA, row);
             
             /*
             Se não for o último token da lista, cria mais uma gramática e
@@ -146,12 +152,17 @@ public class NDFA {
             */
             String finalItemOnList = tokenList.get(tokenList.size() - 1);
             if(!token.equals(finalItemOnList)) {
-                String[] grammar = this.addNewGrammar(this.myListNDFA);
-                this.myListNDFA.add(grammar);
+                String[] grammar = this.addNewGrammar(this.arrayListNDFA);
+                this.arrayListNDFA.add(grammar);
                 previousLetter = grammar[0];
             }
         }
         
+        /*
+        Gramáticas
+        =================================================================
+        ...
+        */
     }
     
     //Marca gramática como final (ex.: *F)
@@ -183,6 +194,45 @@ public class NDFA {
         return list;
     }
     
+    //Checa se um ponteiro já está incluso na cédula
+    private boolean isPointerAlreadyOnCell(String cell, String pointer) {
+        List<String> allPointers = new ArrayList<>();
+        String item = "";
+        
+        //Examina todos os caracteres da cédula
+        for(char c : cell.toCharArray()) {
+            /*
+            Se o caractere atual for um ";" e a variável 'item' não estiver
+            vazia, então adiciona o conteúdo dela na lista.
+            */
+            if(Character.compare(c, ';') == 0 && !item.isBlank()) {
+                allPointers.add(item);
+                item = "";
+                continue;
+            }
+            
+            //Armazena o caractere atual na variável
+            item += Character.toString(c);
+        }
+        
+        /*
+        Se a variável 'item' não estiver vazia após o loop, então o conteúdo
+        dela será adicionado na lista.
+        */
+        if(!item.isBlank())
+            allPointers.add(item);
+        
+        //Verifica se o ponteiro já está presente na cédula
+        for(String current : allPointers) {
+            //Ponteiro encontrado
+            if(current.equals(pointer))
+                return true;
+        }
+        
+        //Ponteiro não está na cédula
+        return false;
+    }
+    
     //Adiciona um ponteiro no item de uma gramática para outra
     private List<String[]> addPointerOnList
       (List<String[]> list, String row, String item, String pointer) {
@@ -211,9 +261,13 @@ public class NDFA {
             //Cédula está vazia
             if(cell.equals("–"))
                 cell = pointer;
+            
             //Cédula já está ocupada
-            else
-                cell += ";" + pointer;
+            else {
+                //Adiciona somente se o ponteiro ainda não estiver presente
+                if(!this.isPointerAlreadyOnCell(cell, pointer))
+                    cell += ";" + pointer;
+            }
             
             //Atualiza a lista
             aux[idLabel] = cell;
@@ -440,7 +494,7 @@ public class NDFA {
     //Adiciona nova gramática (COM letra(s) específica(s))
     private String[] addNewGrammar(List<String[]> list, String custom) {
         String[] grammar = null;
-        int size = list.get(0).length;
+        final int size = list.get(0).length;
         
         //Procura por uma letra não usada para adicionar à lista
         for(char c : custom.toCharArray()) {
@@ -458,18 +512,18 @@ public class NDFA {
         no lugar.
         */
         while(grammar == null) {
-            //Converte número longo em String
-            String long_na = Long.toString(this.numericAlphabet);
+            //Converte número inteiro em String
+            String int_name = Integer.toString(this.numericAlphabet);
 
             //Número já foi usado
-            if(this.isAlreadyIncluded(long_na, list)) {
+            if(this.isAlreadyIncluded(int_name, list)) {
                this.numericAlphabet++;
                continue;
             }
 
             //Número disponível
             grammar = new String[size];
-            grammar[0] = long_na;
+            grammar[0] = int_name;
             this.numericAlphabet++;
         }
         
@@ -548,6 +602,6 @@ public class NDFA {
     
     //Retorna AFND criado
     public List<String[]> getNDFA() {
-        return this.myListNDFA;
+        return this.arrayListNDFA;
     }
 }
