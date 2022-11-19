@@ -11,7 +11,7 @@ import java.util.List;
 public class NDFA {
     //Listas
     private List<String[]> arrayListNDFA; //Tabela AFND completa
-    private List<String> labels; //Lista de rótulos
+    private final List<String> labels;    //Lista de rótulos (colunas)
     //Alfabetos
     private final char[] lowerAlphabet;
     private final char[] upperAlphabet;
@@ -147,22 +147,193 @@ public class NDFA {
             this.arrayListNDFA = this.setAsFinal(this.arrayListNDFA, row);
             
             /*
-            Se não for o último token da lista, cria mais uma gramática e
-            atualiza variável da gramática anterior.
+            Se não for o último token da lista, então o ponteiro da gramática
+            anterior volta para o "S"
             */
             String finalItemOnList = tokenList.get(tokenList.size() - 1);
-            if(!token.equals(finalItemOnList)) {
-                String[] grammar = this.addNewGrammar(this.arrayListNDFA);
-                this.arrayListNDFA.add(grammar);
-                previousLetter = grammar[0];
-            }
+            if(!token.equals(finalItemOnList))
+                previousLetter = "S";
         }
         
         /*
         Gramáticas
         =================================================================
-        ...
+        Executa a última etapa da criação do AFND, aplicando as regras
+        de gramáticas inclusas no arquivo.
         */
+        List<String[]> grammarList = new ArrayList<>();
+        
+        //Obtém lista das gramáticas
+        for(String[] line : srcTable) {
+            boolean isLineCorrect = true;
+            
+            //Pula a linha se for um token
+            if(line[0].equals("#"))
+                continue;
+            
+            //Checa se a sintaxe da linha inteira está correta
+            if(this.isGrammarRuleCorrect(line[0]) && line.length > 1) {
+                //Percorre cada cédula da linha
+                for(int i = 1; i < line.length; i++) {
+                    String cell = line[i];
+                    
+                    //Checa a sintaxe da cédula está incorreta
+                    if(!this.isGrammarSyntaxCorrect(cell)) {
+                        isLineCorrect = false;
+                        break;
+                    }
+                }
+            }
+            //Sintaxe da linha está incorreta
+            else
+                isLineCorrect = false;
+            
+            //Se não houverem problemas na linha, adicione na lista
+            if(isLineCorrect)
+                grammarList.add(line);
+        }
+        
+        //Procura por gramáticas já usadas
+        List<String[]> alreadyUsed = new ArrayList<>();
+        
+        //Linha
+        for(String[] line : grammarList) {
+            //Coluna
+            for(String cell : line) {
+                //Pula a cédula se for a gramática inicial (S::=)
+                if(cell.equals("<S>::="))
+                    continue;
+                
+                //Pula a cédula se for símbolo terminal
+                if(cell.equals("ε"))
+                    continue;
+                
+                //Ponteiro de gramática da cédula
+                int begin = cell.indexOf("<") + 1;
+                int end = cell.indexOf(">");
+                String pointer = cell.substring(begin, end);
+                
+                //Já existe?
+                if(this.isAlreadyIncluded(pointer, this.arrayListNDFA)) {
+                    //Já foi incluído na lista de usados?
+                    boolean isItOnAlreadyUsedList = false;
+                    for(String[] row : alreadyUsed) {
+                        if(row[0].equals(pointer)) {
+                            isItOnAlreadyUsedList = true;
+                            break;
+                        }
+                    }
+                    
+                    //Ainda não foi incluído na lista de usados
+                    if(!isItOnAlreadyUsedList) {
+                        //Cria nova gramática
+                        String[] grammar = this.addNewGrammar(this.arrayListNDFA);
+                        this.arrayListNDFA.add(grammar);
+                        
+                        //Marca ponteiro para substituição
+                        String[] pointerToReplace = {
+                            pointer,
+                            grammar[0]
+                        };
+                        
+                        //Inclui na lista de usados
+                        alreadyUsed.add(pointerToReplace);
+                    }
+                }
+                //Ainda não existe
+                else {
+                    //Cria nova gramática (com o nome do ponteiro)
+                    String[] grammar = this.addNewGrammar(this.arrayListNDFA, pointer);
+                    this.arrayListNDFA.add(grammar);
+                    
+                    /*
+                    Para evitar que o ponteiro seja interpretado como reutilizado,
+                    caso o mesmo seja encontrado novamente em um futuro laço do
+                    loop, será adicionado o ponteiro na lista de usados.
+                    (Neste caso, o conteúdo do ponteiro antigo e do novo serão
+                    os mesmos)
+                    */
+                    String[] pointerToKeep = {
+                        pointer,
+                        grammar[0]
+                    };
+
+                    //Inclui na lista de usados
+                    alreadyUsed.add(pointerToKeep);
+                }
+            }
+        }
+        
+        //Aplica substituição de ponteiros de gramáticas já usadas
+        for(String[] current : alreadyUsed) {
+            //Linha
+            for(int i = 0; i < grammarList.size(); i++) {
+                //Coluna
+                for(int j = 0; j < grammarList.get(i).length; j++) {
+                    //Pula a cédula caso não seja necessário substituir
+                    if(current[0].equals(current[1]))
+                        continue;
+                    
+                    //Lista de gramáticas
+                    String[] line = grammarList.get(i);
+                    String cell = line[j];
+                    
+                    //Pula a cédula se for símbolo terminal
+                    if(cell.equals("ε"))
+                        continue;
+                    
+                    //Pula a cédula se for a gramática inicial (S::=)
+                    if(cell.equals("<S>::="))
+                        continue;
+                    
+                    //Ponteiros
+                    String oldPointer = "<" + current[0] + ">";
+                    String newPointer = "<" + current[1] + ">";
+                    
+                    //Checa se contém o ponteiro marcado para substituição
+                    if(cell.contains(oldPointer)) {
+                        //Substui ponteiro
+                        cell = cell.replace(oldPointer, newPointer);
+                        line[j] = cell;
+                        grammarList.set(i, line);
+                    }
+                }
+            }
+        }
+        
+        //Após a substituição, insere os ponteiros na tabela
+        for(String[] row : grammarList) {
+            //Gramática da linha atual
+            int begin = row[0].indexOf("<") + 1;
+            int end = row[0].indexOf(">");
+            String currentGrammar = row[0].substring(begin, end);
+            
+            //Ponteiros da linha atual
+            for(int i = 1; i < row.length; i++) {
+                //Marca gramática como final se for símbolo terminal
+                if(row[i].equals("ε")) {
+                    this.arrayListNDFA = this.setAsFinal(this.arrayListNDFA, currentGrammar);
+                    continue;
+                }
+                
+                //ID da coluna
+                char c = row[i].charAt(0);
+                String label = Character.toString(c);
+                
+                //ID do ponteiro
+                int p_begin = row[i].indexOf("<") + 1;
+                int p_end = row[i].indexOf(">");
+                String pointer = row[i].substring(p_begin, p_end);
+                
+                //Insere ponteiro
+                this.arrayListNDFA = this.addPointerOnList(
+                    this.arrayListNDFA,
+                    currentGrammar,
+                    label, 
+                    pointer
+                );
+            }
+        }
     }
     
     //Marca gramática como final (ex.: *F)
@@ -235,7 +406,7 @@ public class NDFA {
     
     //Adiciona um ponteiro no item de uma gramática para outra
     private List<String[]> addPointerOnList
-      (List<String[]> list, String row, String item, String pointer) {
+      (List<String[]> list, String row, String column, String pointer) {
         int idRow = -1;
         int idLabel = -1;
         
@@ -246,7 +417,7 @@ public class NDFA {
                 idRow = list.indexOf(line);
                 
                 //Coluna
-                idLabel = this.labels.indexOf(item);
+                idLabel = this.labels.indexOf(column);
                 
                 //Interrompe loop
                 break;
