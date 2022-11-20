@@ -19,7 +19,7 @@ Para uma descrição mais detalhada, leia o arquivo [Projeto.pdf](https://github
 
 ### Progresso <a name="progress"></a>
 
-(✅) AFND (contém bugs) <br>
+(✅) AFND <br>
 (❌) Determinização <br>
 (❌) Minimização
 
@@ -33,6 +33,12 @@ Antes de abrir o projeto, é necessário ter instalado alguns softwares no siste
 - [Apache NetBeans](https://netbeans.apache.org/download/index.html) <br>
 (IDE usada nesse projeto, requer versão 15 ou superior)
 
+> OBS.: Certifique-se que possua o item "JDK 17" listado como plataforma entrando em *Tools -> Java Platforms*.
+> Caso não esteja listado, utilize o seguinte guia para adicioná-lo na lista:
+>
+>[Visão Geral do Suporte a JDK 8 no NetBeans IDE](https://netbeans.apache.org/kb/docs/java/javase-jdk8_pt_BR.html) <br>
+>(Este guia está um pouco desatualizado, mas o esquema ainda é o mesmo. Apenas troque o "JKD 8" pelo "JDK 17")
+
 ### Abrir & Compilar <a name="compile"></a>
 Supondo que as dependências já estejam corretamente instaladas e a IDE aberta:
 
@@ -44,7 +50,7 @@ Supondo que as dependências já estejam corretamente instaladas e a IDE aberta:
 Copie e cole no campo *Arguments* o texto abaixo, depois clique em *Ok*:
 
 ```
--gui "csv/input.csv" "csv/output.csv"
+-gui "csv/input_1.csv" "csv/output.csv"
 ```
 
 4. Clique no ícone 🔨 *Build Project* para compilar pela primeira vez.
