@@ -28,10 +28,10 @@ Para uma descrição mais detalhada, leia o arquivo [Projeto.pdf](https://github
 ### Instalar dependências <a name="install"></a>
 Antes de abrir o projeto, é necessário ter instalado alguns softwares no sistema:
 
-- [Liberica JDK](https://bell-sw.com/pages/downloads/) <br>
-(Versão modificada do Java JDK usada nesse projeto, requer versão 19 ou superior)
+- [Liberica JDK 17](https://bell-sw.com/pages/downloads/#/java-17-lts) <br>
+(Versão modificada do Java JDK usada nesse projeto, requer versão 17)
 - [Apache NetBeans](https://netbeans.apache.org/download/index.html) <br>
-(IDE usada nesse projeto, requer versão 14 ou superior)
+(IDE usada nesse projeto, requer versão 15 ou superior)
 
 ### Abrir & Compilar <a name="compile"></a>
 Supondo que as dependências já estejam corretamente instaladas e a IDE aberta:
